@@ -16,28 +16,29 @@ class Constraint:
         self.operator = operator
 
     # attempt to reduce the domain of the right
-    def leftForwardCheck:
+    def leftForwardCheck(self):
         # left should just have one value at this point
         value = self.left.domain[0]
         if self.operator == ">":
-            filter(lambda x: x < value, self.right.domain)
+            self.right.domain = filter(lambda x: x < value, self.right.domain)
         elif self.operator == "<":
-            filter(lambda x: x > value, self.right.domain)
+            self.right.domain = filter(lambda x: x > value, self.right.domain)
         elif self.operator == "!":
-            filter(lambda x: x != value, self.right.domain)
+            self.right.domain = filter(lambda x: x != value, self.right.domain)
         elif self.operator == "=":
-            filter(lambda x: x == value, self.right.domain)
+            self.right.domain = filter(lambda x: x == value, self.right.domain)
     # attempt to reduce the domain of the left
-    def rightForwardCheck:
+    def rightForwardCheck(self):
         # right should just have one value at this point
         value = self.right.domain[0]
         if self.operator == ">":
-            filter(lambda x: x > value, self.left.domain)
+            self.left.domain = filter(lambda x: x > value, self.left.domain)
         elif self.operator == "<":
-            filter(lambda x: x < value, self.left.domain)
+            self.left.domain = filter(lambda x: x < value, self.left.domain)
         elif self.operator == "!":
-            filter(lambda x: x != value, self.left.domain)
+            self.left.domain = filter(lambda x: x != value, self.left.domain)
         elif self.operator == "=":
-            filter(lambda x: x == value, self.left.domain)
-            
+            self.left.domain = filter(lambda x: x == value, self.left.domain)
+
 if __name__ == "__main__":
+    
