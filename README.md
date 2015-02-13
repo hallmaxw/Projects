@@ -1,1 +1,1 @@
-# CSP
+# Constraint Satisfaction Problem solver

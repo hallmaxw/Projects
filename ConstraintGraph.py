@@ -1,6 +1,6 @@
 from __future__ import print_function
-class Variable:
 
+class Variable:
     # label: string identifier
     # domain: list of potential integer values
     def __init__(self, label, domain):
@@ -19,6 +19,7 @@ class Constraint:
         self.operator = operator
 
     # return the domain of the right variable filtered by the constraint
+    # NOTE: the left variable should only have one value in the domain
     def filterRightDomain(self):
         # left should just have one value at this point
         value = self.left.domain[0]
@@ -32,6 +33,7 @@ class Constraint:
             return filter(lambda x: x == value, self.right.domain)
 
     # return the domain of the left variable filtered by the constraint
+    # NOTE: the right variable should only have one value in the domain
     def filterLeftDomain(self):
         # right should just have one value at this point
         value = self.right.domain[0]
@@ -44,11 +46,11 @@ class Constraint:
         elif self.operator == "=":
             return filter(lambda x: x == value, self.left.domain)
 
-    # attempt to reduce the domain of the right
+    # reduce the domain of the right variable according to the constraint
     def leftForwardCheck(self):
         self.right.domain = self.filterRightDomain()
 
-    # attempt to reduce the domain of the left
+    # reduce the domain of the left variable according to the constraint
     def rightForwardCheck(self):
         self.left.domain = self.filterLeftDomain()
 
@@ -56,12 +58,15 @@ class ConstraintGraph:
     def __init__(self):
         self.variableDict = {}
 
-    def addVar(self, var):
+    def addVariable(self, var):
         self.variableDict[var] = []
 
     def addConstraint(self, con):
         self.variableDict[con.left].append(con)
         self.variableDict[con.right].append(con)
+
+    def getConstraints(self, var):
+        return self.variableDict[var]
 
     def isComplete(self):
         for variable in self.variableDict.keys():
@@ -69,6 +74,8 @@ class ConstraintGraph:
                 return False
         return True
 
+    # check if the provided value for the provided variable is consistent
+    # with the constraint graph
     def isValueConsistent(self, var, val):
         temp = var.domain
         var.domain = [val]
@@ -84,9 +91,6 @@ class ConstraintGraph:
                     return False
         var.domain = temp
         return True
-
-    def getConstraints(self, var):
-        return self.variableDict[var]
 
     # returns a list of the most constrained variables
     def getMostConstrainedVariables(self):

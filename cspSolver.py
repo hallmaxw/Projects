@@ -33,7 +33,7 @@ if __name__ == "__main__":
         domain = [int(y) for y in line[x+1:].split()]
         labelToVar[label] = c.Variable(label, domain)
     graph = c.ConstraintGraph()
-    map(lambda x: graph.addVar(x), labelToVar.values())
+    map(lambda x: graph.addVariable(x), labelToVar.values())
     f.close()
     f = open(sys.argv[2], "r")
     for line in f:

@@ -1,3 +1,9 @@
-E > X
-Y > X
-Z < X
+X ! Y
+X ! Z
+Y ! Z
+Y ! A
+Z ! A
+Z ! B
+A ! B
+Z ! C
+B ! C
