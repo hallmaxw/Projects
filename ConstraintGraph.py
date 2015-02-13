@@ -51,7 +51,7 @@ class Constraint:
     def rightForwardCheck(self):
         self.left.domain = self.filterLeftDomain()
 
-def ConstraintGraph:
+class ConstraintGraph:
     def __init__(self):
         self.variableDict = {}
 
@@ -62,6 +62,28 @@ def ConstraintGraph:
         self.variableDict[con.left].append(con)
         self.variableDict[con.right].append(con)
 
+    def isComplete(self):
+        for variable in self.variableDict.keys():
+            if not variable.assigned:
+                return False
+        return True
+
+    def isValueConsistent(self, var, val):
+        temp = var.domain
+        var.domain = [val]
+        for constraint in self.getConstraints(var):
+            isLeft = var is constraint.left
+            if isLeft:
+                if len(constraint.filterRightDomain()) == 0:
+                    var.domain = temp
+                    return False
+            else:
+                if len(constraint.filterLeftDomain()) == 0:
+                    var.domain = temp
+                    return False
+        var.domain = temp
+        return True
+
     def getConstraints(self, var):
         return self.variableDict[var]
 
@@ -69,18 +91,18 @@ def ConstraintGraph:
     def getMostConstrainedVariables(self):
         variables = filter(lambda x: not x.assigned, self.variableDict.keys())
         curLength = len(variables[0].domain)
-        variables = [variables[0]]
+        curVariables = [variables[0]]
 
         for variable in variables[1:]:
             if len(variable.domain) < curLength:
-                variables = [variable]
+                curVariables = [variable]
                 curLength = len(variable.domain)
             elif len(variable.domain) == curLength:
-                variables.append(variable)
-        return variables
+                curVariables.append(variable)
+        return curVariables
 
     # return the most constraining variable out of the list of variables
-    def getMostConstainingVariable(self, varList):
+    def getMostConstrainingVariable(self, varList):
         curVar = varList[0]
         # neither sides of the constraint should be assigned
         curCount = len([constraint for constraint in self.variableDict[curVar]
