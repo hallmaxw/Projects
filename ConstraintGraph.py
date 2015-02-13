@@ -145,5 +145,5 @@ class ConstraintGraph:
         variables = filter(lambda x: x.assigned, self.variableDict.keys())
         for variable in variables[:-1]:
             print(variable.label, "=",variable.domain[0],", ", sep="", end="")
-        print(variables[-1].label, "=", variable.domain[0], " ", sep="", end="")
+        print(variables[-1].label, "=", variables[-1].domain[0], " ", sep="", end="")
         print(msg)

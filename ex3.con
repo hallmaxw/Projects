@@ -1,5 +1,3 @@
-A = G
-A > B
-C > B
-D > E
-G > C
+E > X
+Y > X
+Z < X

@@ -42,5 +42,4 @@ if __name__ == "__main__":
         graph.addConstraint(con)
     del labelToVar
 
-    for variable in recursiveBacktrack(graph).variableDict.keys():
-        print(variable.label, " : ", variable.domain[0])
+    recursiveBacktrack(graph)
