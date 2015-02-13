@@ -1,3 +1,4 @@
+from __future__ import print_function
 class Variable:
 
     # label: string identifier
@@ -139,3 +140,10 @@ class ConstraintGraph:
         curDomain.sort(key=getConstrainingFactor)
         variable.domain = curDomain
         return curDomain
+
+    def printAssignedState(self, msg):
+        variables = filter(lambda x: x.assigned, self.variableDict.keys())
+        for variable in variables[:-1]:
+            print(variable.label, "=",variable.domain[0],", ", sep="", end="")
+        print(variables[-1].label, "=", variable.domain[0], " ", sep="", end="")
+        print(msg)

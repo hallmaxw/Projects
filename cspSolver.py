@@ -1,17 +1,14 @@
 from __future__ import print_function
 import ConstraintGraph as c
+import sys
 
 def recursiveBacktrack(graph):
     if graph.isComplete():
-        variables = filter(lambda x: x.assigned, graph.variableDict.keys())
-        for variable in variables[:-1]:
-            print(variable.label, "=",variable.domain[0],", ", sep="", end="")
-        print(variables[-1].label, "=", variable.domain[0], " ", sep="", end="")
-        print("success")
+        graph.printAssignedState("success")
         return graph
     potentials = graph.getMostConstrainedVariables()
     variable = potentials[0] if len(potentials) == 1 else graph.getMostConstrainingVariable(potentials)
-    graph.variableDict[variable]
+    del potentials
     values = graph.getValuesByConstrainingHeuristic(variable)
     for value in values:
         if graph.isValueConsistent(variable, value):
@@ -23,17 +20,13 @@ def recursiveBacktrack(graph):
                 return result
             variable.domain = temp
             variable.assigned = False
-    variables = filter(lambda x: x.assigned, graph.variableDict.keys())
-    for variable in variables[:-1]:
-        print(variable.label, "=",variable.domain[0],", ", sep="", end="")
-    print(variables[-1].label, "=", variable.domain[0], " ", sep="", end="")
-    print("failure")
+    graph.printAssignedState("failure")
     return None
 
 
 if __name__ == "__main__":
     labelToVar = {}
-    f = open("ex1.var", "r")
+    f = open(sys.argv[1], "r")
     for line in f:
         x = line.find(":")
         label = line[:x]
@@ -42,7 +35,7 @@ if __name__ == "__main__":
     graph = c.ConstraintGraph()
     map(lambda x: graph.addVar(x), labelToVar.values())
     f.close()
-    f = open("ex1.con", "r")
+    f = open(sys.argv[2], "r")
     for line in f:
         left, op, right = line.split()
         con = c.Constraint(labelToVar[left], labelToVar[right], op)
