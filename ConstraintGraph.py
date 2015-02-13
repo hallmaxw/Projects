@@ -5,6 +5,7 @@ class Variable:
     def __init__(self, label, domain):
         self.label = label
         self.domain = domain
+        self.assigned = False
 
 class Constraint:
 
@@ -16,33 +17,41 @@ class Constraint:
         self.right = right
         self.operator = operator
 
-    # attempt to reduce the domain of the right
-    def leftForwardCheck(self):
+    # return the domain of the right variable filtered by the constraint
+    def filterRightDomain(self):
         # left should just have one value at this point
         value = self.left.domain[0]
         if self.operator == ">":
-            self.right.domain = filter(lambda x: x < value, self.right.domain)
+            return filter(lambda x: x < value, self.right.domain)
         elif self.operator == "<":
-            self.right.domain = filter(lambda x: x > value, self.right.domain)
+            return filter(lambda x: x > value, self.right.domain)
         elif self.operator == "!":
-            self.right.domain = filter(lambda x: x != value, self.right.domain)
+            return filter(lambda x: x != value, self.right.domain)
         elif self.operator == "=":
-            self.right.domain = filter(lambda x: x == value, self.right.domain)
-    # attempt to reduce the domain of the left
-    def rightForwardCheck(self):
+            return filter(lambda x: x == value, self.right.domain)
+
+    # return the domain of the left variable filtered by the constraint
+    def filterLeftDomain(self):
         # right should just have one value at this point
         value = self.right.domain[0]
         if self.operator == ">":
-            self.left.domain = filter(lambda x: x > value, self.left.domain)
+            return filter(lambda x: x > value, self.left.domain)
         elif self.operator == "<":
-            self.left.domain = filter(lambda x: x < value, self.left.domain)
+            return filter(lambda x: x < value, self.left.domain)
         elif self.operator == "!":
-            self.left.domain = filter(lambda x: x != value, self.left.domain)
+            return filter(lambda x: x != value, self.left.domain)
         elif self.operator == "=":
-            self.left.domain = filter(lambda x: x == value, self.left.domain)
+            return filter(lambda x: x == value, self.left.domain)
+
+    # attempt to reduce the domain of the right
+    def leftForwardCheck(self):
+        self.right.domain = self.filterRightDomain()
+
+    # attempt to reduce the domain of the left
+    def rightForwardCheck(self):
+        self.left.domain = self.filterLeftDomain()
 
 def ConstraintGraph:
-
     def __init__(self):
         self.variableDict = {}
 
@@ -55,3 +64,24 @@ def ConstraintGraph:
 
     def getConstraints(self, var):
         return self.variableDict[var]
+
+    # returns a list of the most constrained variables
+    def getMostConstrainedVariables(self):
+        variables = filter(lambda x: not x.assigned, self.variableDict.keys())
+        curLength = len(variables[0].domain)
+        variables = [variables[0]]
+
+        for variable in variables[1:]:
+            if len(variable.domain) < curLength:
+                variables = [variable]
+                curLength = len(variable.domain)
+            elif len(variable.domain) == curLength:
+                variables.append(variable)
+        return variables
+
+    # return the most constraining variable out of the list of variables
+    def getMostConstainingVariable(self, varList):
+        curVar = varList[0]
+        # neither sides of the constraint should be assigned
+        curCount = len([constraint for constraint in self.variableDict[curVar]
+            if not constraint.left.assigned and not constraint.right.assigned])
