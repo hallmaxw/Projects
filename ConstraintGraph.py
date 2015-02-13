@@ -85,3 +85,35 @@ def ConstraintGraph:
         # neither sides of the constraint should be assigned
         curCount = len([constraint for constraint in self.variableDict[curVar]
             if not constraint.left.assigned and not constraint.right.assigned])
+        for variable in varList[1:]:
+            count = len([constraint for constraint in self.variableDict[variable]
+            if not constraint.left.assigned and not constraint.right.assigned])
+            if count > curCount:
+                curVar = variable
+                curCount = count
+        return curVar
+
+    def getValuesByConstrainingHeuristic(self, variable):
+        # a value's constraining factor will be the maximum amount of
+        # values it would remove from any of the effected variables
+        constraints = self.getConstraints(variable)
+        curDomain = variable.domain
+        def getConstrainingFactor(val):
+            curMax = 0
+            variable.domain = [val]
+            for constraint in constraints:
+                isLeft = variable is constraint.left
+                if isLeft:
+                    curSize = len(constraint.right.domain)
+                    dif = curSize - len(constraint.filterRightDomain())
+                else:
+                    curSize = len(constraint.left.domain)
+                    dif = curSize - len(constraint.filterLeftDomain())
+                    if dif > curMax:
+                        curMax = dif
+            return curMax
+        # want to sort by constraining factor and break ties by value
+        curDomain.sort()
+        curDomain.sort(key=getConstrainingFactor)
+        variable.domain = curDomain
+        return curDomain
