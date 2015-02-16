@@ -48,8 +48,24 @@ def recursiveBacktrack(graph, forwardCheck):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        sys.exit("Usage: python cspSolver.py <variable filename> <constraint filename> <none|fc>")
+
+    forwardCheck = None
+    if sys.argv[3] == "none":
+        forwardCheck = False
+    elif sys.argv[3] == "fc":
+        forwardCheck = True
+    else:
+        sys.exit("Usage: python cspSolver.py <variable filename> <constraint filename> <none|fc>")
+
     labelToVar = {}
-    f = open(sys.argv[1], "r")
+    f = None
+    try:
+        f = open(sys.argv[1], "r")
+    except:
+        sys.exit("Unable to open file: " + sys.argv[1])
+        
     for line in f:
         x = line.find(":")
         label = line[:x]
@@ -58,11 +74,14 @@ if __name__ == "__main__":
     graph = c.ConstraintGraph()
     map(lambda x: graph.addVariable(x), labelToVar.values())
     f.close()
-    f = open(sys.argv[2], "r")
+    try:
+        f = open(sys.argv[2], "r")
+    except:
+        sys.exit("Unable to open file: " + sys.argv[2])
     for line in f:
         left, op, right = line.split()
         con = c.Constraint(labelToVar[left], labelToVar[right], op)
         graph.addConstraint(con)
     del labelToVar
 
-    recursiveBacktrack(graph, True)
+    recursiveBacktrack(graph, forwardCheck)
