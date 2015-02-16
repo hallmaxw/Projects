@@ -12,11 +12,14 @@ def recursiveBacktrack(graph, forwardCheck):
     values = graph.getValuesByConstrainingHeuristic(variable)
     for value in values:
         if graph.isValueConsistent(variable, value):
+            print(variable.label, value)
             variable.assigned = True
             changes = {variable: [x for x in variable.domain if x != value]}
+            variable.domain = [value]
+            # FORWARD CHECKING
             if forwardCheck:
                 constraints = graph.getConstraints(variable)
-                print(variable.label, value)
+                #print(variable.label, value)
                 for constraint in constraints:
                     isLeft = constraint.left is variable
                     affectedVar = None
@@ -32,7 +35,7 @@ def recursiveBacktrack(graph, forwardCheck):
                         oldDomain = constraint.left.domain
                         constraint.rightForwardCheck()
                         newDomain = constraint.left.domain
-                    print(affectedVar.label, oldDomain, newDomain)
+                    #print(affectedVar.label, oldDomain, newDomain)
                     dif = [x for x in oldDomain if x not in newDomain]
                     if affectedVar not in changes:
                         changes[affectedVar] = []
@@ -65,15 +68,16 @@ if __name__ == "__main__":
         f = open(sys.argv[1], "r")
     except:
         sys.exit("Unable to open file: " + sys.argv[1])
-        
+
     for line in f:
         x = line.find(":")
         label = line[:x]
         domain = [int(y) for y in line[x+1:].split()]
         labelToVar[label] = c.Variable(label, domain)
+    f.close()
+
     graph = c.ConstraintGraph()
     map(lambda x: graph.addVariable(x), labelToVar.values())
-    f.close()
     try:
         f = open(sys.argv[2], "r")
     except:
@@ -82,6 +86,7 @@ if __name__ == "__main__":
         left, op, right = line.split()
         con = c.Constraint(labelToVar[left], labelToVar[right], op)
         graph.addConstraint(con)
+    f.close()
     del labelToVar
 
     recursiveBacktrack(graph, forwardCheck)
