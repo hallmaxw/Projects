@@ -54,6 +54,7 @@ class Constraint:
     def rightForwardCheck(self):
         self.left.domain = self.filterLeftDomain()
 
+
 class ConstraintGraph:
     def __init__(self):
         self.variableDict = {}
@@ -133,6 +134,8 @@ class ConstraintGraph:
                 if isLeft:
                     curSize = len(constraint.right.domain)
                     dif = curSize - len(constraint.filterRightDomain())
+                    if dif > curMax:
+                        curMax = dif
                 else:
                     curSize = len(constraint.left.domain)
                     dif = curSize - len(constraint.filterLeftDomain())
