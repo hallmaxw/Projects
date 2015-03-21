@@ -26,21 +26,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ConstraintGraph.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ConstraintGraph.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="810">
-              <caret line="82" column="23" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.97931033" vertical-offset="190" max-vertical-offset="1020">
+              <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
               <folding>
                 <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
-                <element signature="e#1275#1305#0" expanded="true" />
+                <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
-                <element signature="method#getValueToHeuristic#0;class#ConstraintGraph#0" expanded="false" />
-                <element signature="method#getValuesByConstrainingHeuristic#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
                 <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
@@ -52,19 +50,15 @@
       <file leaf-file-name="Constraint.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Constraint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-              <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
+              <caret line="127" column="13" selection-start-line="127" selection-start-column="13" selection-end-line="127" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
                 <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
-                <element signature="e#644#653#0" expanded="true" />
                 <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
-                <element signature="e#2256#2265#0" expanded="true" />
                 <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
-                <element signature="e#3713#3743#0" expanded="true" />
                 <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
-                <element signature="method#getValueHeuristic#0;class#Constraint#0" expanded="false" />
                 <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
                 <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
               </folding>
@@ -72,15 +66,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Solution.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Solution.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.2327044" vertical-offset="285" max-vertical-offset="1500">
-              <caret line="90" column="39" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1590">
+              <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#611#641#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ex3.con" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ex3.con">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ex3.var" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ex3.var">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="195">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -90,8 +103,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Constraint.java" />
         <option value="$PROJECT_DIR$/src/Variable.java" />
+        <option value="$PROJECT_DIR$/src/Constraint.java" />
+        <option value="$PROJECT_DIR$/ex3.var" />
+        <option value="$PROJECT_DIR$/ex3.con" />
         <option value="$PROJECT_DIR$/src/ConstraintGraph.java" />
         <option value="$PROJECT_DIR$/src/Solution.java" />
       </list>
@@ -129,6 +144,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -163,8 +180,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -473,16 +488,20 @@
       <updated>1424539755116</updated>
       <workItem from="1424539762381" duration="9691000" />
       <workItem from="1424643189909" duration="100000" />
-      <workItem from="1424713240523" duration="1201000" />
+      <workItem from="1424713240523" duration="1258000" />
+      <workItem from="1424885077473" duration="20000" />
+      <workItem from="1424906992778" duration="221000" />
+      <workItem from="1426001784084" duration="4374000" />
+      <workItem from="1426010543470" duration="627000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10992000" />
+    <option name="totallyTimeSpent" value="16291000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -492,24 +511,24 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997344" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32934928" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997344" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -534,7 +553,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <option name="time" value="47" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -545,18 +564,16 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="630">
-          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="318" max-vertical-offset="900">
+          <caret line="142" column="39" selection-start-line="142" selection-start-column="39" selection-end-line="142" selection-end-column="39" />
           <folding>
             <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="e#1275#1305#0" expanded="true" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getValueToHeuristic#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getValuesByConstrainingHeuristic#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
@@ -564,22 +581,184 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+    <entry file="file://$PROJECT_DIR$/src/Constraint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1305">
-          <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="181" max-vertical-offset="1350">
+          <caret line="79" column="45" selection-start-line="79" selection-start-column="45" selection-end-line="79" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#611#641#0" expanded="true" />
+            <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
+            <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ex1.var">
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1590">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex3.con">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex3.var">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="195">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="810">
+          <caret line="82" column="23" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
+          <folding>
+            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Constraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="630">
+          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
+            <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1500">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="810">
+          <caret line="82" column="23" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
+          <folding>
+            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Constraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="630">
+          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
+            <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1500">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="810">
+          <caret line="82" column="23" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
+          <folding>
+            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Constraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="315" max-vertical-offset="630">
+          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
+            <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1500">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -591,12 +770,10 @@
             <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="e#1275#1305#0" expanded="true" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getValueToHeuristic#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getValuesByConstrainingHeuristic#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
             <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
@@ -610,7 +787,6 @@
           <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#611#641#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -619,7 +795,42 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="152" max-vertical-offset="630">
+          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
+          <folding>
+            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1305">
+          <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex1.var">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -641,23 +852,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10344828" vertical-offset="0" max-vertical-offset="725">
           <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ex3.var">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="477">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ex3.con">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="477">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -669,55 +863,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
+    <entry file="file://$PROJECT_DIR$/ex3.var">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="331" max-vertical-offset="810">
-          <caret line="82" column="23" selection-start-line="82" selection-start-column="23" selection-end-line="82" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex3.con">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1590">
+          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
           <folding>
-            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="e#1275#1305#0" expanded="true" />
-            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getValueToHeuristic#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getValuesByConstrainingHeuristic#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
-            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Constraint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="105" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="735">
+          <caret line="127" column="13" selection-start-line="127" selection-start-column="13" selection-end-line="127" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
             <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
-            <element signature="e#644#653#0" expanded="true" />
             <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
-            <element signature="e#2256#2265#0" expanded="true" />
             <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
-            <element signature="e#3713#3743#0" expanded="true" />
             <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
-            <element signature="method#getValueHeuristic#0;class#Constraint#0" expanded="false" />
             <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
             <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2327044" vertical-offset="285" max-vertical-offset="1500">
-          <caret line="90" column="39" selection-start-line="90" selection-start-column="39" selection-end-line="90" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.97931033" vertical-offset="190" max-vertical-offset="1020">
+          <caret line="148" column="5" selection-start-line="148" selection-start-column="5" selection-end-line="148" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#611#641#0" expanded="true" />
+            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
           </folding>
         </state>
       </provider>

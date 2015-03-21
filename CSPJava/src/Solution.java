@@ -5,6 +5,7 @@ import java.util.*;
  * Created by maxwell on 2/21/15.
  */
 public class Solution {
+    static int count = 0;
     public static boolean recursiveBackTrack(ConstraintGraph graph, boolean forwardCheck) throws Exception{
         if(graph.isComplete()){
             graph.printAssignedState("Success");
@@ -12,23 +13,29 @@ public class Solution {
         }
         Variable var = graph.getNextVariable();
         for(Integer val : graph.getValuesByConstrainingHeuristic(var)){
-            if(!graph.isValueConsistent(var, val))
-                continue;
             HashMap<Variable, ArrayList<Integer>> changes = new HashMap<Variable, ArrayList<Integer>>();
             var.domain.remove(val);
             changes.put(var, var.domain);
             var.domain = new ArrayList<Integer>();
             var.domain.add(val);
             var.isAssigned = true;
-            if(forwardCheck){
-                HashMap<Variable, ArrayList<Integer>> temp = graph.forwardCheck(var);
-                temp.put(var, changes.get(var));
-                changes = temp;
+            if(graph.isValueConsistent(var, val)) {
+                if (forwardCheck) {
+                    HashMap<Variable, ArrayList<Integer>> temp = graph.forwardCheck(var);
+                    temp.put(var, changes.get(var));
+                    changes = temp;
+                }
+                //graph.printDomains();
+                boolean success = recursiveBackTrack(graph, forwardCheck);
+                if (success)
+                    return true;
             }
-            graph.printDomains();
-            boolean success = recursiveBackTrack(graph, forwardCheck);
-            if(success)
-                return true;
+            else{
+                if(count < 30) {
+                    count++;
+                    graph.printAssignedState("Failure");
+                }
+            }
             // add back the changes
             for(Map.Entry<Variable, ArrayList<Integer>> change : changes.entrySet()){
                 for(int value : change.getValue()){
@@ -37,7 +44,6 @@ public class Solution {
             }
             var.isAssigned = false;
         }
-        graph.printAssignedState("Failure");
         return false;
     }
 
@@ -89,6 +95,6 @@ public class Solution {
             graph.addConstraint(con);
 
         // attempt to solve the problem
-        recursiveBackTrack(graph, true);
+        recursiveBackTrack(graph, false);
     }
 }

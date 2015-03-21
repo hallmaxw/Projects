@@ -2,17 +2,18 @@ import java.io.FileInputStream;
 import java.util.*;
 /**
  * Created by maxwell on 2/21/15.
- */
-/*
-    INPUTS:
-    (1) a training file
-    (2) a test file
-    (3) a learning rate
-    (4) the number of iterations to run the algorithm
+ *
+ *  Perceptron training and testing program.
+ *
+ *  INPUTS:
+ *  1) a file with training data
+ *  2) a file with test data
+ *  3) A learning rate
+ *  4) Number of iterations to train with
  */
 public class Solution {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
         if(args.length != 4){
             System.out.println("Usage: java Solution <training file> <test file> <learning rate> <training iterations>");
             System.exit(-1);
@@ -29,8 +30,25 @@ public class Solution {
             System.out.println("Usage: java Solution <training file> <test file> <learning rate> <training iterations>");
             System.exit(-1);
         }
-        double rate = Double.parseDouble(args[2]);
-        int iterations = Integer.parseInt(args[3]);
+        double rate = 0;
+        try{
+            rate = Double.parseDouble(args[2]);
+        }
+        catch(Exception e){
+            System.out.println("Invalid training rate.");
+            System.out.println("Usage: java Solution <training file> <test file> <learning rate> <training iterations>");
+            System.exit(-1);
+        }
+        int iterations = 0;
+        try{
+            iterations = Integer.parseInt(args[3]);
+        }
+        catch(Exception e){
+            System.out.println("Invalid iteration count.");
+            System.out.println("Usage: java Solution <training file> <test file> <learning rate> <training iterations>");
+            System.exit(-1);
+        }
+
         ArrayList<Byte[]> inputAttributes = new ArrayList<Byte[]>();
         ArrayList<Byte> inputClasses = new ArrayList<Byte>();
 

@@ -24,20 +24,23 @@ public class Perceptron {
         return sum;
     }
 
+    // get the sigmoid unit output of the perceptron with the given inputs
     public double output(Byte[] attributes){
         return 1/(1+Math.exp(-1*dotproduct(attributes)));
     }
 
+    // classify the instance with the given attributes
     public byte classify(Byte[] attributes){
         return (byte) (output(attributes) >= THRESHOLD ? 1 : 0);
     }
 
+    // train the perceptron with the given training data
     public void train(Byte[] attributes, byte classification){
         double output = output(attributes);
         byte cls = (byte) (output >= THRESHOLD ? 1 : 0);
         if(cls != classification){
             for(int x = 0; x < weights.length; x++){
-                weights[x] = weights[x] + learningRate*(classification-cls)*output*(1-output)*attributes[x];
+                weights[x] = weights[x] + learningRate*(classification-output)*output*(1-output)*attributes[x];
             }
         }
     }

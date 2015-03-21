@@ -137,9 +137,10 @@ public class ConstraintGraph {
                 continue;
             state += String.format("%s=%d, ", var.label, var.domain.get(0));
         }
-        System.out.println(state + " " + msg);
+        System.out.println(state.substring(0, state.length()-2) + " " + msg);
     }
 
+    // utility function used in testing
     public void printDomains(){
         System.out.println("CONSTRAINT GRAPH:");
         for(Variable var : variableDict.keySet()){

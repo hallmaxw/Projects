@@ -25,7 +25,7 @@ public class Constraint {
         switch(op){
             case '>':
                 for(int x = 0; x < right.domain.size(); x++){
-                    if(right.domain.get(x) <= left.domain.get(0)){
+                    if(left.domain.get(0) <= right.domain.get(x)){
                         dif.add(right.domain.remove(x));
                         x--;
                     }
@@ -33,7 +33,7 @@ public class Constraint {
                 break;
             case '<':
                 for(int x = 0; x < right.domain.size(); x++){
-                    if(right.domain.get(x) >= left.domain.get(0)){
+                    if(left.domain.get(0) >= right.domain.get(x)){
                         dif.add(right.domain.remove(x));
                         x--;
                     }
@@ -69,7 +69,7 @@ public class Constraint {
         switch(op){
             case '>':
                 for(int x = 0; x < left.domain.size(); x++){
-                    if(right.domain.get(0) >= left.domain.get(x)){
+                    if(left.domain.get(x) <= right.domain.get(0)){
                         dif.add(left.domain.remove(x));
                         x--;
                     }
@@ -77,7 +77,7 @@ public class Constraint {
                 break;
             case '<':
                 for(int x = 0; x < left.domain.size(); x++){
-                    if(right.domain.get(0) <= left.domain.get(x)){
+                    if(left.domain.get(x) >= right.domain.get(0)){
                         dif.add(left.domain.remove(x));
                         x--;
                     }
@@ -141,14 +141,14 @@ public class Constraint {
         switch(op){
             case '>':
                 for(int x = 0; x < left.domain.size(); x++){
-                    if(value >= left.domain.get(x)){
+                    if(left.domain.get(x) <= value){
                         removedCount++;
                     }
                 }
                 break;
             case '<':
                 for(int x = 0; x < left.domain.size(); x++){
-                    if(value <= left.domain.get(x)){
+                    if(left.domain.get(x) >= value){
                         removedCount++;
                     }
                 }
@@ -177,14 +177,14 @@ public class Constraint {
         switch(op){
             case '>':
                 for(int x = 0; x < right.domain.size(); x++){
-                    if(right.domain.get(x) <= value){
+                    if(right.domain.get(x) >= value){
                         removedCount++;
                     }
                 }
                 break;
             case '<':
                 for(int x = 0; x < right.domain.size(); x++){
-                    if(right.domain.get(x) >= value){
+                    if(right.domain.get(x) <= value){
                         removedCount++;
                     }
                 }
