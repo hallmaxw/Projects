@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * Class that represents the constraint between two variables
  * Created by maxwell on 2/21/15.
  */
 public class Constraint {

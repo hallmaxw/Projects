@@ -1,5 +1,6 @@
 import java.util.*;
 /**
+ * Graph where the nodes are variables and the edges are constraints
  * Created by maxwell on 2/21/15.
  */
 public class ConstraintGraph {
@@ -97,12 +98,12 @@ public class ConstraintGraph {
     private HashMap<Integer, Integer> getValueToHeuristic(Variable var){
         HashMap<Integer, Integer> valToHeuristic = new HashMap<Integer, Integer>();
         for(int val : var.domain){
-            int curMax = 0;
+            int sum = 0;
             for(Constraint con : variableDict.get(var)){
                 int conVal = con.getValueHeuristic(var, val);
-                curMax = Math.max(conVal, curMax);
+                sum += conVal;
             }
-            valToHeuristic.put(val, -1*curMax);
+            valToHeuristic.put(val, -1*sum);
         }
         return valToHeuristic;
     }

@@ -1,7 +1,19 @@
 import java.util.*;
 import java.io.*;
+
 public class Solution{
+  private void processTransitionInput(Scanner data, double[][] transitions){
+    for(int row = 0; row < numStates; row++){
+      for(int col = 0; col < numStates; col++){
+        transitions[row][col] = data.nextDouble();
+      }
+    }
+    data.nextLine();
+  }
   public static void main(String[] args) throws Exception{
+    try{
+      if(args.length != 2)
+        throw new Exception();
       Scanner data = new Scanner(new FileInputStream(args[0]));
       Scanner test = new Scanner(new FileInputStream(args[1]));
 
@@ -53,6 +65,10 @@ public class Solution{
           System.out.format("%d ", s+1);
         System.out.println();
       }
-
+    }
+    catch(Exception e){
+      System.out.println("Usage: java Solution <model file> <observations file>");
+      System.exit(-1);
+    }
   }
 }

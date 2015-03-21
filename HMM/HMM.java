@@ -1,6 +1,11 @@
 import java.util.Arrays;
 import java.io.*;
+/*
+  Hidden Markov Model class
+  Implements the Viterbi Decoding algorithm
+*/
 public class HMM{
+
   private String[] symbols;
   private double[] initial;
   private double[][] transitions;
@@ -18,6 +23,8 @@ public class HMM{
       this.outputDistribution[i] = Arrays.copyOf(outputDistribution[i], outputDistribution[i].length);
     }
   }
+
+  // get the index of the given observation
   private int getSymbolIndex(String observation){
     for(int i = 0; i < symbols.length; i++){
       if(symbols[i].equals(observation))
@@ -25,15 +32,18 @@ public class HMM{
     }
     return -1;
   }
+
+  // get the most probable state sequence given an observation
   public int[] getViterbiDecoding(String[] observation){
     double[][] probs = new double[initial.length][observation.length];
     int[][] parents = new int[initial.length][observation.length-1];
-    // build first column
+    // build first column of probabilities
     int index = getSymbolIndex(observation[0]);
     for(int i = 0; i < initial.length; i++){
       probs[i][0] = initial[i]*outputDistribution[i][index];
     }
 
+    // build the rest of the probabilities
     for(int k = 1; k < observation.length; k++){
       // current time stamp is k
       index = getSymbolIndex(observation[k]);
@@ -57,13 +67,14 @@ public class HMM{
     int[] states = new int[observation.length];
     int curState = 0;
     index = observation.length-1;
-    // get last state
+    // get the last state (state with highest probability at last time stamp)
     for(int k = 1; k < initial.length; k++){
       if(probs[k][index] > probs[curState][index]){
         curState = k;
       }
     }
     states[index] = curState;
+    // get the rest of the states
     for(int k = states.length-2; k >= 0; k--){
       states[k] = parents[states[k+1]][k];
     }
