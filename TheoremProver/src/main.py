@@ -1,9 +1,11 @@
-for x in range(2):
-    print("Start")
-    for x in range(3):
-        if True:
-            print("hello")
-            if True:
-                print("Testing")
-                break
-            print("Bye")
+import sys
+import KnowledgeBase as k
+
+f = open(sys.argv[1], "r")
+
+kb = k.KnowledgeBase()
+for line in f:
+    literals = line.split()
+    kb.add_clause(k.Clause(literals))
+print kb.is_valid()
+kb.print_resolution_tree(len(kb.clauses)-1)

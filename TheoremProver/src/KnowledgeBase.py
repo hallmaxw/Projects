@@ -4,7 +4,7 @@ class Clause:
         self.literals = set()
         self.parents = parents
         if literals:
-            self.literals.add(literals)
+            self.literals |= set(literals)
 
     # check if a literal and its negation are both present
     def is_consistent(self):
@@ -36,7 +36,7 @@ class KnowledgeBase:
     def add_clause(self, clause):
         self.clauses.append(clause)
 
-    def attempt_resolution(clause1Index, clause2Index):
+    def attempt_resolution(self, clause1Index, clause2Index):
         newClause = None
         for literal in self.clauses[clause1Index].literals:
             for literal2 in self.clauses[clause2Index].literals:
@@ -60,15 +60,22 @@ class KnowledgeBase:
         if len(literals) == 0:
             literals.add("False")
         # create the new clause
-        newClause = Clause([clause1Index, clause2Index], literals)
+        newClause = Clause(literals, [clause1Index, clause2Index])
+
         if not newClause.is_consistent():
-            newClause.literals = set([False])
+            newClause.literals = set(["False"])
         self.add_clause(newClause)
         return newClause
 
+    def print_resolution_tree(self, clauseIndex):
+        clause = self.clauses[clauseIndex]
+        if clause.parents:
+            self.print_resolution_tree(clause.parents[0])
+            self.print_resolution_tree(clause.parents[1])
+        print clause.literals
 
 def negate_literal(literal):
-    if literal[0] == '~':
+    if literal[0] == "~":
         return literal[1:]
     else:
-        return '~' + literal
+        return "~" + literal
