@@ -2,7 +2,6 @@
 class Clause:
     def __init__(self, literals = None, parents = None):
         self.literals = set()
-        self.resolved = False
         self.parents = parents
         if literals:
             self.literals.add(literals)
@@ -19,43 +18,37 @@ class Clause:
 
 class KnowledgeBase:
     def __init__(self):
-        self.clauses = {}
-
-    def get_all_clauses(self):
-        return set(self.clauses.values())
-
-    def get_all_literals(self):
-        return set(self.clauses.keys())
-
-    def add_clause(self, clause):
-        for literal in clause.literals:
-            if literal not in self.clauses:
-                self.clauses[literal] = []
-            self.clauses[literal].add(clause)
+        self.clauses = []
 
     def is_valid(self):
-        while self.attempt_resolution():
-            continue
-        if "False" in self.clauses:
-            return False
+        clause1Index = 0
+        while clause1Index < len(self.clauses):
+            for clause2Index in xrange(clause1Index+1, len(self.clauses)):
+                newClause = self.attempt_resolution(clause1Index, clause2Index)
+                if newClause and newClause.is_false():
+                    return False
+            clause1Index += 1
         return True
 
+    def get_all_clauses(self):
+        return self.clauses
 
-    def attempt_resolution(self):
-        for clause in self.get_all_clauses():
-            for literal in clause.literals:
-                negation = negate_literal(literal)
-                for negClause in self.clauses[negation]:
-                    if negClause is not clause:
-                        # found a clause
-                        newClause = self.apply_rsetesolution(clause, negClause, literal)
-                        return not newClause.is_false()
-        return False
+    def add_clause(self, clause):
+        self.clauses.append(clause)
+
+    def attempt_resolution(clause1Index, clause2Index):
+        newClause = None
+        for literal in self.clauses[clause1Index].literals:
+            for literal2 in self.clauses[clause2Index].literals:
+                if negate_literal(literal2) == literal:
+                    newClause = self.apply_resolution(clause1Index, clause2Index, literal)
+                    break
+        return newClause
 
     # apply resolution and return the new clause
-    def apply_resolution(self, clause1, clause2, literal):
-        clause1.resolved = True
-        clause2.resolved = True
+    def apply_resolution(self, clause1Index, clause2Index, literal):
+        clause1 = self.clauses[clause1Index]
+        clause2 = self.clauses[clause2Index]
         negation = negate_literal(literal)
         literals = set()
         for lit in clause1.literals:
@@ -67,7 +60,7 @@ class KnowledgeBase:
         if len(literals) == 0:
             literals.add("False")
         # create the new clause
-        newClause = Clause([clause1, clause2], literals)
+        newClause = Clause([clause1Index, clause2Index], literals)
         if not newClause.is_consistent():
             newClause.literals = set([False])
         self.add_clause(newClause)
