@@ -29,7 +29,7 @@
       <file leaf-file-name="ConstraintGraph.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+            <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="720">
               <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
               <folding>
                 <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
@@ -52,7 +52,7 @@
       <file leaf-file-name="Constraint.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Constraint.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
+            <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="750">
               <caret line="4" column="61" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -68,18 +68,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Solution.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Solution.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Solution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.6163523" vertical-offset="0" max-vertical-offset="1890">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1165" max-vertical-offset="1890">
               <caret line="115" column="96" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="96" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#658#688#0" expanded="true" />
-                <element signature="e#2162#2180#0" expanded="true" />
-                <element signature="e#2588#2597#0" expanded="true" />
-                <element signature="e#2916#2928#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.04137931" vertical-offset="0" max-vertical-offset="725">
+              <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -87,7 +93,7 @@
       <file leaf-file-name="ex3.con" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ex3.con">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
+            <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165">
               <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
               <folding />
             </state>
@@ -97,7 +103,7 @@
       <file leaf-file-name="ex3.var" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ex3.var">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
+            <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="195">
               <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
@@ -501,11 +507,12 @@
       <workItem from="1426001784084" duration="4374000" />
       <workItem from="1426010543470" duration="627000" />
       <workItem from="1426900862912" duration="1523000" />
+      <workItem from="1426905165688" duration="27000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17814000" />
+    <option name="totallyTimeSpent" value="17841000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -519,24 +526,24 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997344" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997344" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -570,6 +577,70 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="720">
+          <caret line="142" column="0" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+          <folding>
+            <element signature="method#addConstraint#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isComplete#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainedVariables#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getConstrainingCount#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getMostConstrainingVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getValueToHeuristic#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getValuesByConstrainingHeuristic#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#getNextVariable#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printAssignedState#0;class#ConstraintGraph#0" expanded="false" />
+            <element signature="method#printDomains#0;class#ConstraintGraph#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Constraint.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="750">
+          <caret line="4" column="61" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Constraint#0;class#Constraint#0" expanded="false" />
+            <element signature="method#leftForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#rightForwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#forwardCheck#0;class#Constraint#0" expanded="false" />
+            <element signature="method#isValueConsistent#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getRightValueHeuristic#0;class#Constraint#0" expanded="false" />
+            <element signature="method#getLeftValueHeuristic#0;class#Constraint#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Solution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1890">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex3.con">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="165">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ex3.var">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="195">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ConstraintGraph.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1065">
@@ -614,10 +685,6 @@
           <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -682,10 +749,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -750,10 +813,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -802,10 +861,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -854,10 +909,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -889,10 +940,6 @@
           <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -931,10 +978,6 @@
           <caret line="32" column="9" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -995,15 +1038,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="945">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.062893085" vertical-offset="0" max-vertical-offset="477">
-          <caret line="2" column="35" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1047,15 +1081,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Solution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.6163523" vertical-offset="0" max-vertical-offset="1890">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1165" max-vertical-offset="1890">
           <caret line="115" column="96" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#658#688#0" expanded="true" />
-            <element signature="e#2162#2180#0" expanded="true" />
-            <element signature="e#2588#2597#0" expanded="true" />
-            <element signature="e#2916#2928#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.04137931" vertical-offset="0" max-vertical-offset="725">
+          <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
+          <folding />
         </state>
       </provider>
     </entry>

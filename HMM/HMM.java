@@ -33,10 +33,8 @@ public class HMM{
     return -1;
   }
 
-  // get the most probable state sequence given an observation
-  public int[] getViterbiDecoding(String[] observation){
-    double[][] probs = new double[initial.length][observation.length];
-    int[][] parents = new int[initial.length][observation.length-1];
+  // get the probabilities and parents of the states
+  private void buildViterbiProbabilities(double[][] probs, int[][] parents, String[] observation){
     // build first column of probabilities
     int index = getSymbolIndex(observation[0]);
     for(int i = 0; i < initial.length; i++){
@@ -63,10 +61,13 @@ public class HMM{
         parents[i][k-1] = parent;
       }
     }
+  }
 
-    int[] states = new int[observation.length];
+  // get the viterbi state sequence given the probabilities and parents
+  private int[] getViterbiStateSequence(double[][] probs, int[][] parents){
+    int[] states = new int[probs[0].length];
     int curState = 0;
-    index = observation.length-1;
+    int index = probs[0].length-1;
     // get the last state (state with highest probability at last time stamp)
     for(int k = 1; k < initial.length; k++){
       if(probs[k][index] > probs[curState][index]){
@@ -79,5 +80,14 @@ public class HMM{
       states[k] = parents[states[k+1]][k];
     }
     return states;
+  }
+
+  // get the most probable state sequence given an observation
+  public int[] getViterbiDecoding(String[] observation){
+    double[][] probs = new double[initial.length][observation.length];
+    int[][] parents = new int[initial.length][observation.length-1];
+
+    buildViterbiProbabilities(probs, parents, observation);
+    return getViterbiStateSequence(probs, parents);
   }
 }

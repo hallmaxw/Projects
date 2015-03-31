@@ -1,6 +1,6 @@
 Created by Maxwell Hall
 
-Developed on Mac OS X 10.10 (Linux)
+Developed on Mac OS X 10.10 (Linux) with Java version 1.8.0_11
 
 HOW TO COMPILE:
 1) Put HMM.java and Solution.java in the same directory

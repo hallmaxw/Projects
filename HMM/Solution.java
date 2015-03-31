@@ -1,15 +1,17 @@
 import java.util.*;
 import java.io.*;
+/*
+  Main method for a Hidden Markov Model implementation program.
+  The program takes two files as command line arguments:
+    1: A file containing model data
+    2: A file containing observation sequence data
+  and runs the Viterbi Decoding algorithm against the given observations and data.
 
+  The output of the program is line delimited outputs of the Viterbi Decoding algorithm.
+  Each Viterbi Decoding output is a space delimited sequence of 1-based states.
+*/
 public class Solution{
-  private void processTransitionInput(Scanner data, double[][] transitions){
-    for(int row = 0; row < numStates; row++){
-      for(int col = 0; col < numStates; col++){
-        transitions[row][col] = data.nextDouble();
-      }
-    }
-    data.nextLine();
-  }
+
   public static void main(String[] args) throws Exception{
     try{
       if(args.length != 2)
