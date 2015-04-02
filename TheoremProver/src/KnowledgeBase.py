@@ -1,4 +1,4 @@
-# testing
+import heapq
 class Clause:
     def __init__(self, literals = None, parents = None):
         self.literals = set()
@@ -6,15 +6,23 @@ class Clause:
         if literals:
             self.literals |= set(literals)
 
-    # check if a literal and its negation are both present
-    def is_consistent(self):
-        for literal in self.literals:
-            if negate_literal(literal) in self.literals:
-                return False
-        return True
+    # comparison for use in the heap
+    def __cmp__(self, other):
+        if len(self.literals) > len(other.literals):
+            return 1
+        elif len(self.literals) < len(other.literals):
+            return -1
+        else:
+            return 0
 
     def is_false(self):
         return len(self.literals) == 1 and "False" in self.literals
+
+    def is_true(self):
+        for literal in self.literals:
+            if negate_literal(literal) in self.literals:
+                return True
+        return False
 
 class KnowledgeBase:
     def __init__(self):
@@ -23,7 +31,12 @@ class KnowledgeBase:
     def is_valid(self):
         clause1Index = 0
         while clause1Index < len(self.clauses):
+            if self.clauses[clause1Index].is_true():
+                clause1Index += 1
+                continue
             for clause2Index in xrange(clause1Index+1, len(self.clauses)):
+                if self.clauses[clause2Index].is_true():
+                    continue
                 newClause = self.attempt_resolution(clause1Index, clause2Index)
                 if newClause and newClause.is_false():
                     return False
@@ -48,7 +61,11 @@ class KnowledgeBase:
     # apply resolution and return the new clause
     def apply_resolution(self, clause1Index, clause2Index, literal):
         clause1 = self.clauses[clause1Index]
+    #    print "Clause 1:"
+        #print clause1.literals
         clause2 = self.clauses[clause2Index]
+        #print "Clause 2:"
+        #print clause2.literals
         negation = negate_literal(literal)
         literals = set()
         for lit in clause1.literals:
@@ -61,9 +78,6 @@ class KnowledgeBase:
             literals.add("False")
         # create the new clause
         newClause = Clause(literals, [clause1Index, clause2Index])
-
-        if not newClause.is_consistent():
-            newClause.literals = set(["False"])
         self.add_clause(newClause)
         return newClause
 
