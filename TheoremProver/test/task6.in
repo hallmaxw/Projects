@@ -1,16 +1,32 @@
-~l
-~okH2
-okH1
-V1
-~V2
-~ReactorUnitSafe
-~NoLeakH1 ~NoLeakH2 NoLeak ~LowTemp ReactorUnitSafe V1 V2 okH1 okH2 l
-~NoLeak ~LowTemp ReactorUnitSafe
-~NoLeakH1 ~NoLeakH2 NoLeak
-~okH1 NoLeakH1
-okH1 V1 NoLeakH1
-~okH2 NoLeakH2
-okH2 V2 NoLeakH2
-~l ~V1 ~V2 LowTemp
-l ~V1 LowTemp
-l ~V2 LowTemp
+x11 x12 x13
+x21 x22 x23
+x31 x32 x33
+x14 x24 x34 x44 x54 x64
+~x14 x24 x34 x44 x54 x64
+x14 ~x24 x34 x44 x54 x64
+x14 x24 ~x34 x44 x54 x64
+x14 x24 x34 ~x44 x54 x64
+x14 x24 x34 x44 ~x54 x64
+x14 x24 x34 x44 x54 ~x64
+x44
+x55
+x66
+~x11 ~x12
+~x12 ~x13
+~x11 ~x13
+~x21 ~x22
+~x22 ~x23
+~x21 ~x23
+~x31 ~x32
+~x31 ~x33
+~x32 ~x33
+~x11 ~x21
+~x11 ~x31
+~x21 ~x31
+~x12 ~x22
+~x12 ~x32
+~x22 ~x32
+~x13 ~x23
+~x13 ~x33
+~x23 ~x33
+~x11 ~x22 ~x33 ~x44 ~x55 ~x66
