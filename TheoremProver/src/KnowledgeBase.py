@@ -1,4 +1,6 @@
 import heapq
+
+
 class Clause:
     def __init__(self, literals = None, parents = None):
         self.literals = set()
@@ -29,6 +31,7 @@ class Clause:
             if negate_literal(literal) in self.literals:
                 return True
         return False
+
 
 class KnowledgeBase:
     def __init__(self):
@@ -62,10 +65,6 @@ class KnowledgeBase:
 
     # apply resolution and return the new clause
     def apply_resolution(self, clause1, clause2, literal):
-    #    print "Clause 1:"
-        #print clause1.literals
-        #print "Clause 2:"
-        #print clause2.literals
         negation = negate_literal(literal)
         literals = set()
         for lit in clause1.literals:
@@ -86,6 +85,7 @@ class KnowledgeBase:
         if clause.parents:
             self.print_resolution_tree(clause.parents[0], depth+1)
             self.print_resolution_tree(clause.parents[1], depth+1)
+
 
 def negate_literal(literal):
     if literal[0] == "~":
