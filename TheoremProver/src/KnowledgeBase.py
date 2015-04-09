@@ -15,12 +15,14 @@ class Clause:
         if literals:
             self.literals |= set(literals)
 
+    # two clauses are equivalent if they have the same literals
     def __eq__(self, other):
         intersection = self.literals & other.literals
         if len(intersection) == len(self.literals) and len(intersection) == len(other.literals):
             return True
         return False
 
+    # two clauses are not equivalent if they do not have the same literals
     def __ne__(self, other):
         intersection = self.literals & other.literals
         if len(intersection) == len(self.literals) and len(intersection) == len(other.literals):
@@ -44,13 +46,7 @@ class Clause:
 
     def is_false(self):
         return len(self.literals) == 1 and "False" in self.literals
-
-    def is_true(self):
-        for literal in self.literals:
-            if negate_literal(literal) in self.literals:
-                return True
-        return False
-
+    
 
 class KnowledgeBase:
     # clauses: min-heap of clauses
@@ -72,8 +68,8 @@ class KnowledgeBase:
                     return False
         return True
 
-    def get_all_clauses(self):
-        return self.clauses.extend(self.resolvedClauses)
+    def __contains__(self, clause):
+        return clause in self.clauses or clause in self.visitedClauses
 
     def add_clause(self, clause):
         heapq.heappush(self.clauses, clause)
@@ -105,12 +101,9 @@ class KnowledgeBase:
         # create the new clause
         newClause = Clause(literals, [clause1, clause2])
         # store the new clause if it hasn't been stored already
-        if self.is_clause_new(newClause):
+        if newClause not in self:
             self.add_clause(newClause)
         return newClause
-
-    def is_clause_new(self, clause):
-        return clause not in self.clauses and clause not in self.visitedClauses
 
     def print_resolution_tree(self, clause, depth=0):
         print " |"*depth + str(clause)
