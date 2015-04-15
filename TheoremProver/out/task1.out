@@ -1,0 +1,8 @@
+False
+ |V1
+ |~V1
+ | |~LowTemp
+ | |~V1 LowTemp
+ | | |~L
+ | | |L ~V1 LowTemp
+Size of final clause set: 25

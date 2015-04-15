@@ -1,0 +1,22 @@
+False
+ |~NoLeak
+ | |LowTemp
+ | | |V1
+ | | |~V1 LowTemp
+ | | | |~L
+ | | | |L ~V1 LowTemp
+ | |~NoLeak ~LowTemp
+ | | |~ReactorUnitSafe
+ | | |ReactorUnitSafe ~NoLeak ~LowTemp
+ |NoLeak
+ | |NoLeakH2
+ | | |~OkH2
+ | | |OkH2 NoLeakH2
+ | | | |~V2
+ | | | |OkH2 V2 NoLeakH2
+ | |NoLeak ~NoLeakH2
+ | | |NoLeakH1
+ | | | |OkH1
+ | | | |~OkH1 NoLeakH1
+ | | |NoLeak ~NoLeakH2 ~NoLeakH1
+Size of final clause set: 31
