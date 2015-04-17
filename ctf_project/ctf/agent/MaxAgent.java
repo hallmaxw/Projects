@@ -45,9 +45,6 @@ public class MaxAgent extends Agent{
       }
     }
 
-    private boolean wasReset(){
-      return true;
-    }
 
     public void updateGrid(AgentEnvironment environment, boolean includeEnemies){
       // reset FRIENDLY tiles to empty
@@ -129,6 +126,45 @@ public class MaxAgent extends Agent{
       }
     }
 
+    public int getMoveToLocation(final Location newLoc) {
+        HashSet<Location> checkedLocs = new HashSet<Location>();
+        PriorityQueue<SearchLocation> queue = new PriorityQueue<SearchLocation>(10, new Comparator<SearchLocation>() {
+            @Override
+            public int compare(SearchLocation o1, SearchLocation o2) {
+                int cost1 = newLoc.getDistance(o1.loc) + o1.cost;
+                int cost2 = newLoc.getDistance(o2.loc) + o2.cost;
+                return Integer.compare(cost1, cost2);
+            }
+        });
+        if (CanMoveNorth(loc))
+            queue.offer(new SearchLocation(new Location(loc.row - 1, loc.col), AgentAction.MOVE_NORTH, 1));
+        if (CanMoveSouth(loc))
+            queue.offer(new SearchLocation(new Location(loc.row + 1, loc.col), AgentAction.MOVE_SOUTH, 1));
+        if (CanMoveEast(loc))
+            queue.offer(new SearchLocation(new Location(loc.row, loc.col + 1), AgentAction.MOVE_EAST, 1));
+        if (CanMoveWest(loc))
+            queue.offer(new SearchLocation(new Location(loc.row, loc.col - 1), AgentAction.MOVE_WEST, 1));
+
+        while (!queue.isEmpty()) {
+            //            Iterator<SearchLocation> it = queue.iterator();
+            //            System.out.println("CONTENTS");
+            //            while(it.hasNext())
+            //                System.out.println(it.next().loc);
+            SearchLocation currentLoc = queue.poll();
+            //System.out.format("Attempt: %s Goal: %s\n", currentLoc.loc, newLoc);
+            if (currentLoc.loc.equals(newLoc)) {
+                // success
+                return currentLoc.action;
+            }
+            checkedLocs.add(currentLoc.loc);
+            for (SearchLocation tempLoc : currentLoc.getSuccessors()) {
+                if (checkedLocs.contains(tempLoc.loc))
+                    continue;
+                queue.offer(tempLoc);
+            }
+        }
+        return AgentAction.DO_NOTHING;
+    }
 
     public static boolean CanMoveNorth(Location loc){
         if(loc.row > 0 && grid[loc.row-1][loc.col] != TileType.OBSTACLE && grid[loc.row-1][loc.col] != TileType.FRIENDLY)
