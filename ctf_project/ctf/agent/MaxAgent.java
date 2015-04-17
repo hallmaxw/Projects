@@ -1,7 +1,6 @@
 package ctf.agent;
 /*
-  TODO: determine if enemy positions should be stored permanently or just temporarily
-  BUG: Agents think they can move onto their own base (location gets messed up as a result)
+  BUG: An index out of bounds error occurred in update grid. Not sure what caused it
 */
 
 import ctf.common.AgentAction;
@@ -64,6 +63,8 @@ public class MaxAgent extends Agent{
         updateLocation(environment);
         updateGrid(environment, true);
         System.out.println(moveCount++);
+        System.out.format("OUR_BASE VAL: %s CURRENT VAL: %s\n", TileType.OUR_BASE, grid[5][0]);
+        System.out.format("Agent: %s North: %s\n", this, CanMoveNorth(loc, environment.hasFlag()));
 
 
 
@@ -341,6 +342,16 @@ public class MaxAgent extends Agent{
             grid[loc.row-1][loc.col] = TileType.EMPTY;
         if(loc.row < 9 && !environment.isObstacleSouthImmediate())
             grid[loc.row+1][loc.col] = TileType.EMPTY;
+
+        // these could override the base tiles. Always set them back to base
+        if(westTeam){
+            grid[5][0] = TileType.OUR_BASE;
+            grid[5][9] = TileType.ENEMY_BASE;
+        }
+        else{
+            grid[5][0] = TileType.ENEMY_BASE;
+            grid[5][9] = TileType.OUR_BASE;
+        }
 
         if(loc.col < 9 && environment.isAgentEast(AgentEnvironment.OUR_TEAM, true))
             grid[loc.row][loc.col+1] = TileType.FRIENDLY;
