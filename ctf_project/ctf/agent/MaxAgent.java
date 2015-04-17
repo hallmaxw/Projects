@@ -1,6 +1,11 @@
 package ctf.agent;
 /*
-  BUG: An index out of bounds error occurred in update grid. Not sure what caused it
+    BUG: An index out of bounds error occurred in update grid. Not sure what caused it
+    TODO: update updateGrid logic to not wipe out FRIENDLY tiles. Should use PreviousState
+        to remember location (might cause conflict if the other agent moved into the previous tile).
+        Maybe just move back to initial location
+
+    TODO: update the seek out behavior. The agent is very dumb when trying to seek out enemies
 */
 
 import ctf.common.AgentAction;
@@ -63,8 +68,6 @@ public class MaxAgent extends Agent{
         updateLocation(environment);
         updateGrid(environment, true);
         System.out.println(moveCount++);
-        System.out.format("OUR_BASE VAL: %s CURRENT VAL: %s\n", TileType.OUR_BASE, grid[5][0]);
-        System.out.format("Agent: %s North: %s\n", this, CanMoveNorth(loc, environment.hasFlag()));
 
 
 
@@ -84,12 +87,45 @@ public class MaxAgent extends Agent{
             else{
                 move = getMoveToLocation(new Location(5, 0), environment.hasFlag());
             }
-            System.out.format("Agent: %s Row: %d Col: %d Action: %d\n", this, loc.row, loc.col, move);
             prevState = new PreviousState(new Location(loc.row, loc.col), environment, move);
-            ApplyActionToLocation(loc, move);
+            applyActionToLocation(loc, move);
             return move;
         }
         else if(environment.hasFlag()){
+            // consider tagging the enemy carrier
+            if(environment.hasFlag(AgentEnvironment.ENEMY_TEAM)){
+                Location flagLocation = null;
+                Location enemyTarget = westTeam ? new Location(5, 9) : new Location(5, 0);
+                Location myTarget = westTeam ? new Location(5, 0) : new Location(5, 9);
+                int move = 0;
+                if(environment.isFlagNorth(AgentEnvironment.OUR_TEAM, true)){
+                    flagLocation = new Location(loc.row-1, loc.col);
+                    move = AgentAction.MOVE_NORTH;
+                }
+                else if(environment.isFlagSouth(AgentEnvironment.OUR_TEAM, true)){
+                    flagLocation = new Location(loc.row+1, loc.col);
+                    move = AgentAction.MOVE_SOUTH;
+                }
+                else if(environment.isFlagEast(AgentEnvironment.OUR_TEAM, true)){
+                    flagLocation = new Location(loc.row, loc.col+1);
+                    move = AgentAction.MOVE_EAST;
+                }
+                else if(environment.isFlagWest(AgentEnvironment.OUR_TEAM, true)){
+                    flagLocation = new Location(loc.row, loc.col-1);
+                    move = AgentAction.MOVE_WEST;
+                }
+                if(flagLocation != null){
+                    int ourCost = getMovementCost(loc, myTarget);
+                    int enemyCost = getMovementCost(flagLocation, enemyTarget);
+                    if(enemyCost <= ourCost){
+                        // need to tag the carrier
+                        System.out.format("Agent: %s TAGGING\n", this);
+                        System.out.format("OUR COST: %d ENEMY COST: %d\n", ourCost, enemyCost);
+                        applyActionToLocation(loc, move);
+                        return move;
+                    }
+                }
+            }
             int move;
             if(westTeam){
                 move = getMoveToLocation(new Location(5, 0), environment.hasFlag());
@@ -97,48 +133,41 @@ public class MaxAgent extends Agent{
             else{
                 move = getMoveToLocation(new Location(5, 9), environment.hasFlag());
             }
-            System.out.format("Agent: %s Row: %d Col: %d Action: %d\n", this, loc.row, loc.col, move);
             prevState = new PreviousState(new Location(loc.row, loc.col), environment, move);
-            ApplyActionToLocation(loc, move);
+            applyActionToLocation(loc, move);
             return move;
         }
         else{
-            if(!environment.hasFlag(AgentEnvironment.ENEMY_TEAM))
-                return AgentAction.DO_NOTHING;
+            if(!environment.hasFlag(AgentEnvironment.ENEMY_TEAM)){
+                // get out of the way
+                int move = getMoveToLocation(initialLoc, false);
+                applyActionToLocation(loc, move);
+                return move;
+            }
+
             // seek out the enemy with the flag
-            goalEast = environment.isFlagEast(AgentEnvironment.OUR_TEAM, false);
-            goalNorth = environment.isFlagNorth(AgentEnvironment.OUR_TEAM, false);
-            goalWest = environment.isFlagWest(AgentEnvironment.OUR_TEAM, false);
-            goalSouth = environment.isFlagSouth(AgentEnvironment.OUR_TEAM, false);
+            goalEast = environment.isFlagEast(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseEast(AgentEnvironment.OUR_TEAM, true);
+            goalNorth = environment.isFlagNorth(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseNorth(AgentEnvironment.OUR_TEAM, true);
+            goalWest = environment.isFlagWest(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseWest(AgentEnvironment.OUR_TEAM, true);
+            goalSouth = environment.isFlagSouth(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseSouth(AgentEnvironment.OUR_TEAM, true);
 
             if(environment.isFlagEast(AgentEnvironment.OUR_TEAM, true)){
-                ApplyActionToLocation(loc, AgentAction.MOVE_EAST);
+                applyActionToLocation(loc, AgentAction.MOVE_EAST);
                 return AgentAction.MOVE_EAST;
             }
             if(environment.isFlagNorth(AgentEnvironment.OUR_TEAM, true)){
-                ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                applyActionToLocation(loc, AgentAction.MOVE_NORTH);
                 return AgentAction.MOVE_NORTH;
             }
             if(environment.isFlagWest(AgentEnvironment.OUR_TEAM, true)){
-                ApplyActionToLocation(loc, AgentAction.MOVE_WEST);
+                applyActionToLocation(loc, AgentAction.MOVE_WEST);
                 return AgentAction.MOVE_WEST;
             }
 
-            if(environment.isFlagSouth(AgentEnvironment.OUR_TEAM, false)){
-                ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+            if(environment.isFlagSouth(AgentEnvironment.OUR_TEAM, true)){
+                applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
                 return AgentAction.MOVE_SOUTH;
             }
-//            int move;
-//            if(westTeam){
-//                move = getMoveToLocation(new Location(0, 0), environment.hasFlag());
-//            }
-//            else{
-//                move = getMoveToLocation(new Location(0, 9), environment.hasFlag());
-//            }
-//            System.out.format("Agent: %s Row: %d Col: %d Action: %d\n", this, loc.row, loc.col, move);
-//            prevState = new PreviousState(new Location(loc.row, loc.col), environment, move);
-//            ApplyActionToLocation(loc, move);
-//            return move;
         }
 
         // now we have direction booleans for our goal
@@ -153,7 +182,7 @@ public class MaxAgent extends Agent{
         // if the goal is north only, and we're not blocked
         if( goalNorth && ! goalEast && ! goalWest && !obstNorth ) {
              // move north
-            ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+            applyActionToLocation(loc, AgentAction.MOVE_NORTH);
              return AgentAction.MOVE_NORTH;
         }
 
@@ -161,15 +190,15 @@ public class MaxAgent extends Agent{
         if( goalNorth && goalEast ) {
              // pick north or east for move with 50/50 chance
              if( Math.random() < 0.5 && !obstNorth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
                  return AgentAction.MOVE_NORTH;
              }
              if( !obstEast ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_EAST);
+                 applyActionToLocation(loc, AgentAction.MOVE_EAST);
                  return AgentAction.MOVE_EAST;
              }
              if( !obstNorth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
                  return AgentAction.MOVE_NORTH;
              }
         }
@@ -178,15 +207,15 @@ public class MaxAgent extends Agent{
         if( goalNorth && goalWest ) {
              // pick north or west for move with 50/50 chance
              if( Math.random() < 0.5 && !obstNorth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
                  return AgentAction.MOVE_NORTH;
              }
              if( !obstWest ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_WEST);
+                 applyActionToLocation(loc, AgentAction.MOVE_WEST);
                  return AgentAction.MOVE_WEST;
              }
              if( !obstNorth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
                  return AgentAction.MOVE_NORTH;
              }
         }
@@ -194,77 +223,79 @@ public class MaxAgent extends Agent{
         // if the goal is south only, and we're not blocked
         if( goalSouth && ! goalEast && ! goalWest && !obstSouth ) {
              // move south
-            ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+            applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
              return AgentAction.MOVE_SOUTH;
         }
 
         // do same for southeast and southwest as for north versions
         if( goalSouth && goalEast ) {
              if( Math.random() < 0.5 && !obstSouth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
                  return AgentAction.MOVE_SOUTH;
              }
              if( !obstEast ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_EAST);
+                 applyActionToLocation(loc, AgentAction.MOVE_EAST);
                  return AgentAction.MOVE_EAST;
              }
              if( !obstSouth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
                  return AgentAction.MOVE_SOUTH;
              }
         }
 
         if( goalSouth && goalWest && !obstSouth ) {
              if( Math.random() < 0.5 ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
                  return AgentAction.MOVE_SOUTH;
              }
              if( !obstWest ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_WEST);
+                 applyActionToLocation(loc, AgentAction.MOVE_WEST);
                  return AgentAction.MOVE_WEST;
              }
              if( !obstSouth ) {
-                 ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
                  return AgentAction.MOVE_SOUTH;
              }
         }
 
         // if the goal is east only, and we're not blocked
         if( goalEast && !obstEast ) {
-            ApplyActionToLocation(loc, AgentAction.MOVE_EAST);
+            applyActionToLocation(loc, AgentAction.MOVE_EAST);
              return AgentAction.MOVE_EAST;
         }
 
         // if the goal is west only, and we're not blocked
         if( goalWest && !obstWest ) {
-            ApplyActionToLocation(loc, AgentAction.MOVE_WEST);
+            applyActionToLocation(loc, AgentAction.MOVE_WEST);
              return AgentAction.MOVE_WEST;
         }
 
         // otherwise, make any unblocked move
         if( !obstNorth ) {
-            ApplyActionToLocation(loc, AgentAction.MOVE_NORTH);
+            applyActionToLocation(loc, AgentAction.MOVE_NORTH);
              return AgentAction.MOVE_NORTH;
         }
         else if( !obstSouth ) {
-            ApplyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+            applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
              return AgentAction.MOVE_SOUTH;
         }
         else if( !obstEast ) {
-            ApplyActionToLocation(loc, AgentAction.MOVE_EAST);
+            applyActionToLocation(loc, AgentAction.MOVE_EAST);
              return AgentAction.MOVE_EAST;
         }
         else if( !obstWest ) {
-            ApplyActionToLocation(loc, AgentAction.MOVE_WEST);
+            applyActionToLocation(loc, AgentAction.MOVE_WEST);
              return AgentAction.MOVE_WEST;
         }
         else {
              // completely blocked!
+             applyActionToLocation(loc, AgentAction.DO_NOTHING);
              return AgentAction.DO_NOTHING;
         }
     }
 
-    public static void ApplyActionToLocation(Location loc, int action){
+    public void applyActionToLocation(Location loc, int action){
+        System.out.format("Agent: %s Row: %d Col: %d Action: %d\n", this, loc.row, loc.col, action);
         switch(action){
             case AgentAction.MOVE_NORTH:
                 loc.row--;
@@ -282,10 +313,8 @@ public class MaxAgent extends Agent{
     }
 
     private static TileType GetTileUpdate(TileType tile){
-        if(tile == TileType.FRIENDLY){
-            return TileType.EMPTY;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_10){
+
+        if(tile == TileType.TEMP_OBSTACLE_10){
             return TileType.TEMP_OBSTACLE_9;
         }
         else if(tile == TileType.TEMP_OBSTACLE_9){
@@ -325,6 +354,7 @@ public class MaxAgent extends Agent{
                 grid[row][col] = GetTileUpdate(grid[row][col]);
             }
         }
+        grid[prevState.loc.row][prevState.loc.col] = TileType.EMPTY;
         if(loc.col < 9 && environment.isObstacleEastImmediate())
             grid[loc.row][loc.col+1] = TileType.OBSTACLE;
         if(loc.col > 0 && environment.isObstacleWestImmediate())
@@ -404,6 +434,47 @@ public class MaxAgent extends Agent{
                 loc.col = 9;
             }
         }
+    }
+
+    public int getMovementCost(final Location loc, final Location newLoc){
+        HashSet<Location> checkedLocs = new HashSet<Location>();
+        PriorityQueue<SearchLocation> queue = new PriorityQueue<SearchLocation>(10, new Comparator<SearchLocation>() {
+            @Override
+            public int compare(SearchLocation o1, SearchLocation o2) {
+                int cost1 = newLoc.getDistance(o1.loc) + o1.cost;
+                int cost2 = newLoc.getDistance(o2.loc) + o2.cost;
+                return Integer.compare(cost1, cost2);
+            }
+        });
+        if(newLoc.equals(loc))
+            return 0;
+        if (CanMoveNorth(loc, true))
+            queue.offer(new SearchLocation(new Location(loc.row - 1, loc.col), AgentAction.MOVE_NORTH, 1));
+        if (CanMoveSouth(loc, true))
+            queue.offer(new SearchLocation(new Location(loc.row + 1, loc.col), AgentAction.MOVE_SOUTH, 1));
+        if (CanMoveEast(loc, true))
+            queue.offer(new SearchLocation(new Location(loc.row, loc.col + 1), AgentAction.MOVE_EAST, 1));
+        if (CanMoveWest(loc, true))
+            queue.offer(new SearchLocation(new Location(loc.row, loc.col - 1), AgentAction.MOVE_WEST, 1));
+        checkedLocs.add(loc);
+        while (!queue.isEmpty()) {
+            SearchLocation currentLoc = queue.poll();
+            //System.out.format("Attempt: %s Goal: %s\n", currentLoc.loc, newLoc);
+            if (currentLoc.loc.equals(newLoc)) {
+                // success
+                return currentLoc.cost;
+            }
+            checkedLocs.add(currentLoc.loc);
+            for (SearchLocation tempLoc : currentLoc.getSuccessors(true)) {
+                if (checkedLocs.contains(tempLoc.loc)) {
+                    //System.out.format("%s discarded\n", tempLoc.loc);
+                    continue;
+                }
+                checkedLocs.add(tempLoc.loc);
+                queue.offer(tempLoc);
+            }
+        }
+        return Integer.MAX_VALUE;
     }
 
     public int getMoveToLocation(final Location newLoc, boolean hasFlag) {
