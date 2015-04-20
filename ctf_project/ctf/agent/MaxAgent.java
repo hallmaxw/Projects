@@ -1,17 +1,15 @@
 package ctf.agent;
 /*
     BUG: An index out of bounds error occurred in update grid. Not sure what caused it
-    TODO: update updateGrid logic to not wipe out FRIENDLY tiles. Should use PreviousState
-        to remember location (might cause conflict if the other agent moved into the previous tile).
-        Maybe just move back to initial location
-
     TODO: update the seek out behavior. The agent is very dumb when trying to seek out enemies
+    TODO: change the enemy obstacle update behavior - agent can get stuck in a
+          loop when the tile is set to empty
 
 */
 
 import ctf.common.AgentAction;
 import ctf.common.AgentEnvironment;
-
+import java.lang.Math;
 import java.util.*;
 
 public class MaxAgent extends Agent{
@@ -21,6 +19,11 @@ public class MaxAgent extends Agent{
     public Location initialLoc;
     public boolean westTeam;
     public PreviousState prevState;
+    /*
+      Temporary obstacles should reset on average after 15 moves (both agents
+      factor into this)
+    */
+    public static final double TILE_RESET_PROBABILITY = 1/((double)15);
 
     public MaxAgent(){
         moveCount = 0;
@@ -314,36 +317,10 @@ public class MaxAgent extends Agent{
     }
 
     private static TileType GetTileUpdate(TileType tile){
-
-        if(tile == TileType.TEMP_OBSTACLE_10){
-            return TileType.TEMP_OBSTACLE_9;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_9){
-            return TileType.TEMP_OBSTACLE_8;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_8){
-            return TileType.TEMP_OBSTACLE_7;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_7){
-            return TileType.TEMP_OBSTACLE_6;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_6){
-            return TileType.TEMP_OBSTACLE_5;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_5){
-            return TileType.TEMP_OBSTACLE_4;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_4){
-            return TileType.TEMP_OBSTACLE_3;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_3){
-            return TileType.TEMP_OBSTACLE_2;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_2){
-            return TileType.TEMP_OBSTACLE_1;
-        }
-        else if(tile == TileType.TEMP_OBSTACLE_1){
+        if(tile == TileType.TEMP_OBSTACLE){
+          if(Math.random() <= TILE_RESET_PROBABILITY){
             return TileType.EMPTY;
+          }
         }
         return tile;
     }
@@ -355,7 +332,11 @@ public class MaxAgent extends Agent{
                 grid[row][col] = GetTileUpdate(grid[row][col]);
             }
         }
-        grid[prevState.loc.row][prevState.loc.col] = TileType.EMPTY;
+
+        if(moveCount > 0){
+          grid[prevState.loc.row][prevState.loc.col] = TileType.EMPTY;
+        }
+
         if(loc.col < 9 && environment.isObstacleEastImmediate())
             grid[loc.row][loc.col+1] = TileType.OBSTACLE;
         if(loc.col > 0 && environment.isObstacleWestImmediate())
@@ -374,7 +355,7 @@ public class MaxAgent extends Agent{
         if(loc.row < 9 && !environment.isObstacleSouthImmediate())
             grid[loc.row+1][loc.col] = TileType.EMPTY;
 
-        // these could override the base tiles. Always set them back to base
+        // The base tiles could have been to empty. Always set them back to base
         if(westTeam){
             grid[5][0] = TileType.OUR_BASE;
             grid[5][9] = TileType.ENEMY_BASE;
@@ -395,13 +376,13 @@ public class MaxAgent extends Agent{
 
         if(includeEnemies){
             if(loc.col < 9 && environment.isAgentEast(AgentEnvironment.ENEMY_TEAM, true))
-                grid[loc.row][loc.col+1] = TileType.TEMP_OBSTACLE_10;
+                grid[loc.row][loc.col+1] = TileType.TEMP_OBSTACLE;
             if(loc.col > 0 && environment.isAgentWest(AgentEnvironment.ENEMY_TEAM, true))
-                grid[loc.row][loc.col-1] = TileType.TEMP_OBSTACLE_10;
+                grid[loc.row][loc.col-1] = TileType.TEMP_OBSTACLE;
             if(loc.row > 0 && environment.isAgentNorth(AgentEnvironment.ENEMY_TEAM, true))
-                grid[loc.row-1][loc.col] = TileType.TEMP_OBSTACLE_10;
+                grid[loc.row-1][loc.col] = TileType.TEMP_OBSTACLE;
             if(loc.row < 9 && environment.isAgentSouth(AgentEnvironment.ENEMY_TEAM, true))
-                grid[loc.row+1][loc.col] = TileType.TEMP_OBSTACLE_10;
+                grid[loc.row+1][loc.col] = TileType.TEMP_OBSTACLE;
         }
     }
 
@@ -629,8 +610,6 @@ public class MaxAgent extends Agent{
 
     public enum TileType{
         UNKNOWN, EMPTY, OBSTACLE, ENEMY_BASE, OUR_BASE, FRIENDLY,
-        TEMP_OBSTACLE_10, TEMP_OBSTACLE_9, TEMP_OBSTACLE_8, TEMP_OBSTACLE_7,
-        TEMP_OBSTACLE_6, TEMP_OBSTACLE_5, TEMP_OBSTACLE_4, TEMP_OBSTACLE_3,
-        TEMP_OBSTACLE_2, TEMP_OBSTACLE_1
+        TEMP_OBSTACLE
     }
 }
