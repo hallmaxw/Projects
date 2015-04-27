@@ -1,10 +1,7 @@
 package ctf.agent;
-/*
-    BUG: An index out of bounds error occurred in update grid. Not sure what caused it
-    TODO: update the seek out behavior. The agent is very dumb when trying to seek out enemies
-    TODO: change the enemy obstacle update behavior - agent can get stuck in a
-          loop when the tile is set to empty
 
+/*
+    TODO: update the seek out behavior. The agent is very dumb when trying to seek out enemies
 */
 
 import ctf.common.AgentAction;
@@ -13,6 +10,7 @@ import java.lang.Math;
 import java.util.*;
 
 public class MaxAgent extends Agent{
+    public static boolean DEBUG = true;
     public int moveCount;
     public static TileType[][] grid = new TileType[10][10];
     public Location loc;
@@ -20,10 +18,11 @@ public class MaxAgent extends Agent{
     public boolean westTeam;
     public PreviousState prevState;
     /*
-      Temporary obstacles should reset on average after 15 moves (both agents
-      factor into this)
+      Temporary obstacles should reset on average after 15 moves (both agents'
+      moves count)
     */
     public static final double TILE_RESET_PROBABILITY = 1/((double)15);
+
 
     public MaxAgent(){
         moveCount = 0;
@@ -37,41 +36,50 @@ public class MaxAgent extends Agent{
         }
     }
 
+
+    public void setInitialInformation(AgentEnvironment environment){
+      if(environment.isBaseSouth(AgentEnvironment.OUR_TEAM, false)){
+          // top agent
+          loc.row = 0;
+          initialLoc.row = 0;
+      }
+      else{
+          // bottom agent
+          loc.row = 9;
+          initialLoc.row = 9;
+      }
+      if(environment.isBaseEast(AgentEnvironment.ENEMY_TEAM, false)){
+          // west team
+          loc.col = 0;
+          initialLoc.col = 0;
+          grid[5][0] = TileType.OUR_BASE;
+          grid[5][9] = TileType.ENEMY_BASE;
+          westTeam = true;
+      }
+      else{
+          // east team
+          westTeam = false;
+          loc.col = 9;
+          initialLoc.col = 9;
+          grid[5][0] = TileType.ENEMY_BASE;
+          grid[5][9] = TileType.OUR_BASE;
+      }
+    }
+
+
     public int getMove( AgentEnvironment environment ) {
         // get initial location info
         if(moveCount == 0){
-            if(environment.isBaseSouth(AgentEnvironment.OUR_TEAM, false)){
-                // top agent
-                loc.row = 0;
-                initialLoc.row = 0;
-            }
-            else{
-                // bottom agent
-                loc.row = 9;
-                initialLoc.row = 9;
-            }
-            if(environment.isBaseEast(AgentEnvironment.ENEMY_TEAM, false)){
-                // west team
-                loc.col = 0;
-                initialLoc.col = 0;
-                grid[5][0] = TileType.OUR_BASE;
-                grid[5][9] = TileType.ENEMY_BASE;
-                westTeam = true;
-            }
-            else{
-                westTeam = false;
-                loc.col = 9;
-                initialLoc.col = 9;
-                grid[5][0] = TileType.ENEMY_BASE;
-                grid[5][9] = TileType.OUR_BASE;
-            }
+            setInitialInformation(environment);
         }
         // UPDATE LOCATION
         // REMEMBER:  No obstacles can exist in the far east and west columns
         //            of the board
-        updateLocation(environment);
+        updateIfReset(environment);
         updateGrid(environment, true);
-        System.out.println(moveCount++);
+        moveCount++;
+        if (DEBUG)
+            System.out.println(moveCount);
 
 
 
@@ -96,6 +104,7 @@ public class MaxAgent extends Agent{
             return move;
         }
         else if(environment.hasFlag()){
+            // this agent has the flag
             // consider tagging the enemy carrier
             if(environment.hasFlag(AgentEnvironment.ENEMY_TEAM)){
                 Location flagLocation = null;
@@ -123,8 +132,11 @@ public class MaxAgent extends Agent{
                     int enemyCost = getMovementCost(flagLocation, enemyTarget);
                     if(enemyCost <= ourCost){
                         // need to tag the carrier
-                        System.out.format("Agent: %s TAGGING\n", this);
-                        System.out.format("OUR COST: %d ENEMY COST: %d\n", ourCost, enemyCost);
+                        if(DEBUG){
+                            System.out.format("Agent: %s TAGGING\n", this);
+                            System.out.format("OUR COST: %d ENEMY COST: %d\n", ourCost, enemyCost);
+                        }
+                        prevState = new PreviousState(new Location(loc.row, loc.col), environment, move);
                         applyActionToLocation(loc, move);
                         return move;
                     }
@@ -145,33 +157,43 @@ public class MaxAgent extends Agent{
             if(!environment.hasFlag(AgentEnvironment.ENEMY_TEAM)){
                 // get out of the way
                 int move = getMoveToLocation(initialLoc, false);
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, move);
                 applyActionToLocation(loc, move);
                 return move;
             }
+            else{
+                // seek out the enemy with the flag
+                goalEast = environment.isFlagEast(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseEast(AgentEnvironment.OUR_TEAM, true);
+                goalNorth = environment.isFlagNorth(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseNorth(AgentEnvironment.OUR_TEAM, true);
+                goalWest = environment.isFlagWest(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseWest(AgentEnvironment.OUR_TEAM, true);
+                goalSouth = environment.isFlagSouth(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseSouth(AgentEnvironment.OUR_TEAM, true);
 
-            // seek out the enemy with the flag
-            goalEast = environment.isFlagEast(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseEast(AgentEnvironment.OUR_TEAM, true);
-            goalNorth = environment.isFlagNorth(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseNorth(AgentEnvironment.OUR_TEAM, true);
-            goalWest = environment.isFlagWest(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseWest(AgentEnvironment.OUR_TEAM, true);
-            goalSouth = environment.isFlagSouth(AgentEnvironment.OUR_TEAM, false) && !environment.isBaseSouth(AgentEnvironment.OUR_TEAM, true);
 
-            if(environment.isFlagEast(AgentEnvironment.OUR_TEAM, true)){
-                applyActionToLocation(loc, AgentAction.MOVE_EAST);
-                return AgentAction.MOVE_EAST;
-            }
-            if(environment.isFlagNorth(AgentEnvironment.OUR_TEAM, true)){
-                applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-                return AgentAction.MOVE_NORTH;
-            }
-            if(environment.isFlagWest(AgentEnvironment.OUR_TEAM, true)){
-                applyActionToLocation(loc, AgentAction.MOVE_WEST);
-                return AgentAction.MOVE_WEST;
+                // check immediate tiles for enemy
+                if(environment.isFlagEast(AgentEnvironment.OUR_TEAM, true)){
+                    prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_EAST);
+                    applyActionToLocation(loc, AgentAction.MOVE_EAST);
+                    return AgentAction.MOVE_EAST;
+                }
+                if(environment.isFlagNorth(AgentEnvironment.OUR_TEAM, true)){
+                    prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
+                    applyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                    return AgentAction.MOVE_NORTH;
+                }
+                if(environment.isFlagWest(AgentEnvironment.OUR_TEAM, true)){
+                    prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_WEST);
+                    applyActionToLocation(loc, AgentAction.MOVE_WEST);
+                    return AgentAction.MOVE_WEST;
+                }
+
+                if(environment.isFlagSouth(AgentEnvironment.OUR_TEAM, true)){
+                    prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
+                    applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                    return AgentAction.MOVE_SOUTH;
+                }
             }
 
-            if(environment.isFlagSouth(AgentEnvironment.OUR_TEAM, true)){
-                applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-                return AgentAction.MOVE_SOUTH;
-            }
+
         }
 
         // now we have direction booleans for our goal
@@ -185,121 +207,144 @@ public class MaxAgent extends Agent{
 
         // if the goal is north only, and we're not blocked
         if( goalNorth && ! goalEast && ! goalWest && !obstNorth ) {
-             // move north
+            // move north
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
             applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-             return AgentAction.MOVE_NORTH;
+            return AgentAction.MOVE_NORTH;
         }
 
         // if goal both north and east
         if( goalNorth && goalEast ) {
-             // pick north or east for move with 50/50 chance
-             if( Math.random() < 0.5 && !obstNorth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-                 return AgentAction.MOVE_NORTH;
-             }
-             if( !obstEast ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_EAST);
-                 return AgentAction.MOVE_EAST;
-             }
-             if( !obstNorth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-                 return AgentAction.MOVE_NORTH;
-             }
+            // pick north or east for move with 50/50 chance
+            if( Math.random() < 0.5 && !obstNorth ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
+                applyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                return AgentAction.MOVE_NORTH;
+            }
+            if( !obstEast ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_EAST);
+                applyActionToLocation(loc, AgentAction.MOVE_EAST);
+                return AgentAction.MOVE_EAST;
+            }
+            if( !obstNorth ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
+                applyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                return AgentAction.MOVE_NORTH;
+            }
         }
 
         // if goal both north and west
         if( goalNorth && goalWest ) {
-             // pick north or west for move with 50/50 chance
-             if( Math.random() < 0.5 && !obstNorth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-                 return AgentAction.MOVE_NORTH;
-             }
-             if( !obstWest ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_WEST);
-                 return AgentAction.MOVE_WEST;
-             }
-             if( !obstNorth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-                 return AgentAction.MOVE_NORTH;
-             }
+            // pick north or west for move with 50/50 chance
+            if( Math.random() < 0.5 && !obstNorth ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
+                applyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                return AgentAction.MOVE_NORTH;
+            }
+            if( !obstWest ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_WEST);
+                applyActionToLocation(loc, AgentAction.MOVE_WEST);
+                return AgentAction.MOVE_WEST;
+            }
+            if( !obstNorth ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
+                applyActionToLocation(loc, AgentAction.MOVE_NORTH);
+                return AgentAction.MOVE_NORTH;
+            }
         }
 
         // if the goal is south only, and we're not blocked
         if( goalSouth && ! goalEast && ! goalWest && !obstSouth ) {
-             // move south
+            // move south
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
             applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-             return AgentAction.MOVE_SOUTH;
+            return AgentAction.MOVE_SOUTH;
         }
 
         // do same for southeast and southwest as for north versions
         if( goalSouth && goalEast ) {
              if( Math.random() < 0.5 && !obstSouth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-                 return AgentAction.MOVE_SOUTH;
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
+                applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                return AgentAction.MOVE_SOUTH;
              }
              if( !obstEast ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_EAST);
-                 return AgentAction.MOVE_EAST;
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_EAST);
+                applyActionToLocation(loc, AgentAction.MOVE_EAST);
+                return AgentAction.MOVE_EAST;
              }
              if( !obstSouth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-                 return AgentAction.MOVE_SOUTH;
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
+                applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                return AgentAction.MOVE_SOUTH;
              }
         }
 
         if( goalSouth && goalWest && !obstSouth ) {
-             if( Math.random() < 0.5 ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-                 return AgentAction.MOVE_SOUTH;
-             }
-             if( !obstWest ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_WEST);
-                 return AgentAction.MOVE_WEST;
-             }
-             if( !obstSouth ) {
-                 applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-                 return AgentAction.MOVE_SOUTH;
-             }
+            if( Math.random() < 0.5 ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
+                applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                return AgentAction.MOVE_SOUTH;
+            }
+            if( !obstWest ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_WEST);
+                applyActionToLocation(loc, AgentAction.MOVE_WEST);
+                return AgentAction.MOVE_WEST;
+            }
+            if( !obstSouth ) {
+                prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
+                applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
+                return AgentAction.MOVE_SOUTH;
+            }
         }
 
         // if the goal is east only, and we're not blocked
         if( goalEast && !obstEast ) {
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_EAST);
             applyActionToLocation(loc, AgentAction.MOVE_EAST);
-             return AgentAction.MOVE_EAST;
+            return AgentAction.MOVE_EAST;
         }
 
         // if the goal is west only, and we're not blocked
         if( goalWest && !obstWest ) {
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_WEST);
             applyActionToLocation(loc, AgentAction.MOVE_WEST);
-             return AgentAction.MOVE_WEST;
+            return AgentAction.MOVE_WEST;
         }
 
         // otherwise, make any unblocked move
         if( !obstNorth ) {
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_NORTH);
             applyActionToLocation(loc, AgentAction.MOVE_NORTH);
-             return AgentAction.MOVE_NORTH;
+            return AgentAction.MOVE_NORTH;
         }
         else if( !obstSouth ) {
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_SOUTH);
             applyActionToLocation(loc, AgentAction.MOVE_SOUTH);
-             return AgentAction.MOVE_SOUTH;
+            return AgentAction.MOVE_SOUTH;
         }
         else if( !obstEast ) {
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_EAST);
             applyActionToLocation(loc, AgentAction.MOVE_EAST);
-             return AgentAction.MOVE_EAST;
+            return AgentAction.MOVE_EAST;
         }
         else if( !obstWest ) {
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.MOVE_WEST);
             applyActionToLocation(loc, AgentAction.MOVE_WEST);
-             return AgentAction.MOVE_WEST;
+            return AgentAction.MOVE_WEST;
         }
         else {
-             // completely blocked!
-             applyActionToLocation(loc, AgentAction.DO_NOTHING);
-             return AgentAction.DO_NOTHING;
+            // completely blocked!
+            prevState = new PreviousState(new Location(loc.row, loc.col), environment, AgentAction.DO_NOTHING);
+            applyActionToLocation(loc, AgentAction.DO_NOTHING);
+            return AgentAction.DO_NOTHING;
         }
     }
 
+
     public void applyActionToLocation(Location loc, int action){
-        System.out.format("Agent: %s Row: %d Col: %d Action: %d\n", this, loc.row, loc.col, action);
+        if(DEBUG)
+            System.out.format("Agent: %s Row: %d Col: %d Action: %d\n", this, loc.row, loc.col, action);
         switch(action){
             case AgentAction.MOVE_NORTH:
                 loc.row--;
@@ -316,6 +361,10 @@ public class MaxAgent extends Agent{
         }
     }
 
+
+    /*
+        Get the updated tile for the given tile.
+    */
     private static TileType GetTileUpdate(TileType tile){
         if(tile == TileType.TEMP_OBSTACLE){
           if(Math.random() <= TILE_RESET_PROBABILITY){
@@ -325,6 +374,10 @@ public class MaxAgent extends Agent{
         return tile;
     }
 
+
+    /*
+        Update the grid with data provided by the environment.
+    */
     public void updateGrid(AgentEnvironment environment, boolean includeEnemies){
         // update tiles
         for(int row = 0; row < 9; row++){
@@ -333,10 +386,12 @@ public class MaxAgent extends Agent{
             }
         }
 
+        // set our previous location to empty
         if(moveCount > 0){
           grid[prevState.loc.row][prevState.loc.col] = TileType.EMPTY;
         }
 
+        // update the grid according to the environment around us
         if(loc.col < 9 && environment.isObstacleEastImmediate())
             grid[loc.row][loc.col+1] = TileType.OBSTACLE;
         if(loc.col > 0 && environment.isObstacleWestImmediate())
@@ -345,7 +400,6 @@ public class MaxAgent extends Agent{
             grid[loc.row-1][loc.col] = TileType.OBSTACLE;
         if(loc.row < 9 && environment.isObstacleSouthImmediate())
             grid[loc.row+1][loc.col] = TileType.OBSTACLE;
-
         if(loc.col < 9 && !environment.isObstacleEastImmediate())
             grid[loc.row][loc.col+1] = TileType.EMPTY;
         if(loc.col > 0 && !environment.isObstacleWestImmediate())
@@ -355,7 +409,7 @@ public class MaxAgent extends Agent{
         if(loc.row < 9 && !environment.isObstacleSouthImmediate())
             grid[loc.row+1][loc.col] = TileType.EMPTY;
 
-        // The base tiles could have been to empty. Always set them back to base
+        // The base tiles could have been set to empty. Always set them back to base
         if(westTeam){
             grid[5][0] = TileType.OUR_BASE;
             grid[5][9] = TileType.ENEMY_BASE;
@@ -364,7 +418,7 @@ public class MaxAgent extends Agent{
             grid[5][0] = TileType.ENEMY_BASE;
             grid[5][9] = TileType.OUR_BASE;
         }
-
+        // update the grid with agent info
         if(loc.col < 9 && environment.isAgentEast(AgentEnvironment.OUR_TEAM, true))
             grid[loc.row][loc.col+1] = TileType.FRIENDLY;
         if(loc.col > 0 && environment.isAgentWest(AgentEnvironment.OUR_TEAM, true))
@@ -373,7 +427,6 @@ public class MaxAgent extends Agent{
             grid[loc.row-1][loc.col] = TileType.FRIENDLY;
         if(loc.row < 9 && environment.isAgentSouth(AgentEnvironment.OUR_TEAM, true))
             grid[loc.row+1][loc.col] = TileType.FRIENDLY;
-
         if(includeEnemies){
             if(loc.col < 9 && environment.isAgentEast(AgentEnvironment.ENEMY_TEAM, true))
                 grid[loc.row][loc.col+1] = TileType.TEMP_OBSTACLE;
@@ -384,18 +437,21 @@ public class MaxAgent extends Agent{
             if(loc.row < 9 && environment.isAgentSouth(AgentEnvironment.ENEMY_TEAM, true))
                 grid[loc.row+1][loc.col] = TileType.TEMP_OBSTACLE;
         }
+        grid[loc.row][loc.col] = TileType.FRIENDLY;
     }
 
+
     /*
-      Check if the Agent's location was reset. If so, update location.
+      Check if the Agent's location was reset. If so, update the location.
     */
-    public void updateLocation(AgentEnvironment environment){
+    public void updateIfReset(AgentEnvironment environment){
         if(environment.isBaseEast(AgentEnvironment.OUR_TEAM, false) || environment.isBaseWest(AgentEnvironment.OUR_TEAM, false))
             return;
 
         // the agent is on it's edge of the grid
         if(environment.isObstacleNorthImmediate()){
-            System.out.format("%s: RESET OCCURRED\n", this);
+            if(DEBUG)
+                System.out.format("%s: RESET OCCURRED\n", this);
             // agent at top corner
             loc.row = 0;
             if(westTeam){
@@ -406,7 +462,8 @@ public class MaxAgent extends Agent{
             }
         }
         else if(environment.isObstacleSouthImmediate()){
-            System.out.format("%s: RESET OCCURRED\n", this);
+            if(DEBUG)
+                System.out.format("%s: RESET OCCURRED\n", this);
             // agent at bottom corner
             loc.row = 9;
             if(westTeam){
@@ -418,8 +475,14 @@ public class MaxAgent extends Agent{
         }
     }
 
+
+    /*
+        Get the cost to move from loc to newloc. Implemented using A*.
+        It's assumed that unknown tiles are empty.
+    */
     public int getMovementCost(final Location loc, final Location newLoc){
         HashSet<Location> checkedLocs = new HashSet<Location>();
+        // min-heap used to drive our path search
         PriorityQueue<SearchLocation> queue = new PriorityQueue<SearchLocation>(10, new Comparator<SearchLocation>() {
             @Override
             public int compare(SearchLocation o1, SearchLocation o2) {
@@ -441,7 +504,6 @@ public class MaxAgent extends Agent{
         checkedLocs.add(loc);
         while (!queue.isEmpty()) {
             SearchLocation currentLoc = queue.poll();
-            //System.out.format("Attempt: %s Goal: %s\n", currentLoc.loc, newLoc);
             if (currentLoc.loc.equals(newLoc)) {
                 // success
                 return currentLoc.cost;
@@ -449,18 +511,24 @@ public class MaxAgent extends Agent{
             checkedLocs.add(currentLoc.loc);
             for (SearchLocation tempLoc : currentLoc.getSuccessors(true)) {
                 if (checkedLocs.contains(tempLoc.loc)) {
-                    //System.out.format("%s discarded\n", tempLoc.loc);
                     continue;
                 }
                 checkedLocs.add(tempLoc.loc);
                 queue.offer(tempLoc);
             }
         }
+        // no path found
         return Integer.MAX_VALUE;
     }
 
+
+    /*
+        Get the next best move from the current location to newLoc.
+        Implemented using A*. It is assumed that unknown tiles are empty.
+    */
     public int getMoveToLocation(final Location newLoc, boolean hasFlag) {
         HashSet<Location> checkedLocs = new HashSet<Location>();
+        // min-heap used to drive the path search
         PriorityQueue<SearchLocation> queue = new PriorityQueue<SearchLocation>(10, new Comparator<SearchLocation>() {
             @Override
             public int compare(SearchLocation o1, SearchLocation o2) {
@@ -482,7 +550,6 @@ public class MaxAgent extends Agent{
         checkedLocs.add(loc);
         while (!queue.isEmpty()) {
             SearchLocation currentLoc = queue.poll();
-            //System.out.format("Attempt: %s Goal: %s\n", currentLoc.loc, newLoc);
             if (currentLoc.loc.equals(newLoc)) {
                 // success
                 return currentLoc.action;
@@ -490,49 +557,53 @@ public class MaxAgent extends Agent{
             checkedLocs.add(currentLoc.loc);
             for (SearchLocation tempLoc : currentLoc.getSuccessors(hasFlag)) {
                 if (checkedLocs.contains(tempLoc.loc)) {
-                    //System.out.format("%s discarded\n", tempLoc.loc);
                     continue;
                 }
                 checkedLocs.add(tempLoc.loc);
                 queue.offer(tempLoc);
             }
         }
+        // no path found
         return AgentAction.DO_NOTHING;
     }
 
+
+    /*
+        Check if the given tile type is traversable
+    */
+    public static boolean IsTileTraversable(TileType tile, boolean hasFlag){
+        return tile == TileType.EMPTY || tile == TileType.ENEMY_BASE
+                || (tile == TileType.OUR_BASE && hasFlag) ||
+                tile == TileType.UNKNOWN;
+    }
+
     public static boolean CanMoveNorth(Location loc, boolean hasFlag){
-        if(loc.row > 0 && (grid[loc.row-1][loc.col] == TileType.EMPTY || grid[loc.row-1][loc.col] == TileType.ENEMY_BASE
-                || (grid[loc.row-1][loc.col] == TileType.OUR_BASE && hasFlag) ||
-                grid[loc.row-1][loc.col] == TileType.UNKNOWN))
+        if(loc.row > 0 && IsTileTraversable(grid[loc.row-1][loc.col], hasFlag))
             return true;
         return false;
     }
 
     public static boolean CanMoveSouth(Location loc, boolean hasFlag){
-        if(loc.row < 9 && (grid[loc.row+1][loc.col] == TileType.EMPTY || grid[loc.row+1][loc.col] == TileType.ENEMY_BASE
-                || (grid[loc.row+1][loc.col] == TileType.OUR_BASE && hasFlag) ||
-                grid[loc.row+1][loc.col] == TileType.UNKNOWN))
+        if(loc.row < 9 && IsTileTraversable(grid[loc.row+1][loc.col], hasFlag))
             return true;
         return false;
     }
 
     public static boolean CanMoveEast(Location loc, boolean hasFlag){
-        if(loc.col < 9 && (grid[loc.row][loc.col+1] == TileType.EMPTY || grid[loc.row][loc.col+1] == TileType.ENEMY_BASE
-                || (grid[loc.row][loc.col+1] == TileType.OUR_BASE && hasFlag) ||
-                grid[loc.row][loc.col+1] == TileType.UNKNOWN)){
+        if(loc.col < 9 && IsTileTraversable(grid[loc.row][loc.col+1], hasFlag)){
             return true;
         }
         return false;
     }
 
     public static boolean CanMoveWest(Location loc, boolean hasFlag){
-        if(loc.col > 0 && (grid[loc.row][loc.col-1] == TileType.EMPTY || grid[loc.row][loc.col-1] == TileType.ENEMY_BASE
-                || (grid[loc.row][loc.col-1] == TileType.OUR_BASE && hasFlag) ||
-                grid[loc.row][loc.col-1] == TileType.UNKNOWN))
+        if(loc.col > 0 && IsTileTraversable(grid[loc.row][loc.col-1], hasFlag))
             return true;
         return false;
     }
 
+
+    // class used to store the previus state of the agent
     public class PreviousState{
         public Location loc;
         public AgentEnvironment environment;
@@ -545,6 +616,8 @@ public class MaxAgent extends Agent{
         }
     }
 
+
+    // class used in the path search implementation
     public class SearchLocation{
         public Location loc;
         public int action;
@@ -570,6 +643,8 @@ public class MaxAgent extends Agent{
         }
     }
 
+
+    // class used to store grid locations
     public class Location{
         public int row;
         public int col;
@@ -608,6 +683,8 @@ public class MaxAgent extends Agent{
         }
     }
 
+
+    // enumeration of potential tile types
     public enum TileType{
         UNKNOWN, EMPTY, OBSTACLE, ENEMY_BASE, OUR_BASE, FRIENDLY,
         TEMP_OBSTACLE
