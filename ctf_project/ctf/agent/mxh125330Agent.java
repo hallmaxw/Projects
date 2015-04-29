@@ -1,7 +1,7 @@
 package ctf.agent;
 
 /*
-    TODO: update the seek out behavior. The agent is very dumb when trying to seek out enemies
+    Author: Maxwell Hall
 */
 
 import ctf.common.AgentAction;
@@ -9,8 +9,8 @@ import ctf.common.AgentEnvironment;
 import java.lang.Math;
 import java.util.*;
 
-public class MaxAgent extends Agent{
-    public static boolean DEBUG = true;
+public class mxh125330Agent extends Agent{
+    public static boolean DEBUG = false;
     public int moveCount;
     public static TileType[][] grid = new TileType[10][10];
     public Location loc;
@@ -24,7 +24,7 @@ public class MaxAgent extends Agent{
     public static final double TILE_RESET_PROBABILITY = 1/((double)15);
 
 
-    public MaxAgent(){
+    public mxh125330Agent(){
         moveCount = 0;
         loc = new Location(0, 0);
         initialLoc = new Location(0, 0);
@@ -437,7 +437,7 @@ public class MaxAgent extends Agent{
             if(loc.row < 9 && environment.isAgentSouth(AgentEnvironment.ENEMY_TEAM, true))
                 grid[loc.row+1][loc.col] = TileType.TEMP_OBSTACLE;
         }
-        grid[loc.row][loc.col] = TileType.FRIENDLY;
+        //grid[loc.row][loc.col] = TileType.FRIENDLY;
     }
 
 

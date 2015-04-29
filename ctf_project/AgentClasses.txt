@@ -2,4 +2,4 @@
 ctf.agent.ChenSimpleAgent
 ctf.agent.RandomAgent
 ctf.agent.BomberAgent
-ctf.agent.MaxAgent
+ctf.agent.mxh125330Agent
