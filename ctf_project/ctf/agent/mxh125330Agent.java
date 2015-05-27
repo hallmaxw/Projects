@@ -99,6 +99,20 @@ public class mxh125330Agent extends Agent{
             else{
                 move = getMoveToLocation(new Location(5, 0), environment.hasFlag());
             }
+            if(environment.hasFlag(AgentEnvironment.ENEMY_TEAM)){
+                if(environment.isFlagNorth(AgentEnvironment.OUR_TEAM, true)){
+                    move = AgentAction.MOVE_NORTH;
+                }
+                else if(environment.isFlagSouth(AgentEnvironment.OUR_TEAM, true)){
+                    move = AgentAction.MOVE_SOUTH;
+                }
+                else if(environment.isFlagEast(AgentEnvironment.OUR_TEAM, true)){
+                    move = AgentAction.MOVE_EAST;
+                }
+                else if(environment.isFlagWest(AgentEnvironment.OUR_TEAM, true)){
+                    move = AgentAction.MOVE_WEST;
+                }
+            }
             prevState = new PreviousState(new Location(loc.row, loc.col), environment, move);
             applyActionToLocation(loc, move);
             return move;
